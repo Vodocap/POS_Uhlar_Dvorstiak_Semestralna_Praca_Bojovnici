@@ -6,34 +6,42 @@
 #include "Bojovnik.h"
 
 
-Bojovnik::Bojovnik(double pZivoty, double pPoskodenie, double pBrnenie, double pUnik) {
+Bojovnik::Bojovnik(double pZivoty, double pPoskodenie, double pBrnenie, double pUnik, std::string pMeno) {
     this->zivoty = pZivoty;
     this->brnenie = pBrnenie;
     this->poskodenie = pPoskodenie;
     this->unik = pUnik;
+    this->mrtvy = false;
+    this->meno = pMeno;
 
 }
 
 bool Bojovnik::zautoc(Bojovnik *bojovnik) {
-    if (bojovnik == nullptr) {
+    if (this->mrtvy) {
         return false;
     }
+    std::cout << this->meno << " utoci na " << bojovnik->getMeno() << std::endl;
     double nahodneCislo = ((double)std::rand() / RAND_MAX);
-    std::cout << "cislo: " << nahodneCislo << std::endl;
     if (nahodneCislo < bojovnik->getUnik()) {
-        std::cout << "Bojovnik na ktoreho bolo utocene sa vyhol utoku" << std::endl;
+        std::cout << bojovnik->getMeno() <<" sa vyhol utoku" << std::endl;
         return true;
-    }
-    if ((bojovnik->getZivoty() - (this->poskodenie - bojovnik->getBrnenie()) <= 0) {
-
     }
     bojovnik->setZivoty(bojovnik->getZivoty() - (this->poskodenie - bojovnik->getBrnenie()));
     this->vypisStav();
+    if (bojovnik->getMrtvy()) {
+        std::cout << bojovnik->getMeno() <<" zomrel" << std::endl;
+        return true;
+    }
     bojovnik->vypisStav();
+
 }
 
 void Bojovnik::setZivoty(double hodnota) {
     this->zivoty = hodnota;
+    if (this->zivoty <= 0) {
+        this->mrtvy = true;
+    }
+
 }
 
 double Bojovnik::getZivoty() {
@@ -65,6 +73,11 @@ double Bojovnik::getUnik() {
 }
 
 void Bojovnik::vypisStav() {
+    if (this->mrtvy) {
+        std::cout << "Mrtvy bojovnik" << std::endl;
+        return;
+    }
+    std::cout << this->meno << std::endl;
     std::cout << "Životy: " << this->zivoty << std::endl;
     std::cout << "Brnenie: " << this->brnenie << std::endl;
     std::cout << "Poškodenie: " << this->poskodenie << std::endl;
@@ -77,5 +90,9 @@ bool Bojovnik::getMrtvy() {
 }
 
 void Bojovnik::setMrtvy(bool hodnota) {
+    this->mrtvy = hodnota;
+}
 
+std::string Bojovnik::getMeno() {
+    return this->meno;
 }
