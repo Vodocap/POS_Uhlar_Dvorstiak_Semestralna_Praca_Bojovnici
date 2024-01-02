@@ -104,23 +104,32 @@ int Statistiky::dajPocetBojovnikov(int uroven, int hranica) {
 void Statistiky::vypisStatistiky(int statistika, int uroven) {
     switch (statistika) {
         case 0:
-            std::cout << uroven << ") Zivoty v intervale " << this->dajZivotyHodnota(uroven, 0) << " - " << this->dajZivotyHodnota(uroven, 1) << std::endl;
+            std::cout << uroven << ") Zivoty v intervale <" << this->dajZivotyHodnota(uroven, 0) << " - " << this->dajZivotyHodnota(uroven, 1) << "> \n cena - " << this->getCenaUrovne(uroven) <<std::endl;
             break;
         case 1:
-            std::cout << uroven << ") Zivoty v intervale " << this->dajBrnenieHodnota(uroven, 0) << " - " << this->dajBrnenieHodnota(uroven, 1) << std::endl;
+            std::cout << uroven << ") Brnenie v intervale <" << this->dajBrnenieHodnota(uroven, 0) << " - " << this->dajBrnenieHodnota(uroven, 1) << "> \n cena - " << this->getCenaUrovne(uroven) << std::endl;
             break;
         case 2:
-            std::cout << uroven << ") Zivoty v intervale " << this->dajPoskodenieHodnota(uroven, 0) << " - " << this->dajPoskodenieHodnota(uroven, 1) << std::endl;
+            std::cout << uroven << ") Poškodenie v intervale <" << this->dajPoskodenieHodnota(uroven, 0) << " - " << this->dajPoskodenieHodnota(uroven, 1) << "> \n cena - " << this->getCenaUrovne(uroven) << std::endl;
             break;
         case 3:
-            std::cout << uroven << ") Zivoty v intervale " << this->dajUnikHodnota(uroven, 0) << " - " << this->dajUnikHodnota(uroven, 1) << std::endl;
+            std::cout << uroven << ") Únik v intervale <" << this->dajUnikHodnota(uroven, 0) << " - " << this->dajUnikHodnota(uroven, 1) << "> \n cena - " << this->getCenaUrovne(uroven) << std::endl;
             break;
         case 4:
-            std::cout << uroven << ") Zivoty v intervale " << this->dajRychlostUtokuHodnota(uroven, 0) << " - " << this->dajRychlostUtokuHodnota(uroven, 1) << std::endl;
+            std::cout << uroven << ") Rýchlosť Útoku v intervale <" << this->dajRychlostUtokuHodnota(uroven, 0) << " - " << this->dajRychlostUtokuHodnota(uroven, 1) << "> \n cena - " << this->getCenaUrovne(uroven) << std::endl;
             break;
         case 5:
-            std::cout << uroven << ") Zivoty v intervale " << this->dajPocetBojovnikov(uroven, 0) << " - " << this->dajPocetBojovnikov(uroven, 1) << std::endl;
+            std::cout << uroven << ") Počet Bojovníkov v intervale <" << this->dajPocetBojovnikov(uroven, 0) << " - " << this->dajPocetBojovnikov(uroven, 1) << "> \n cena - " << this->getCenaUrovne(uroven) << std::endl;
             break;
     }
 
+}
+
+int Statistiky::getCenaUrovne(int uroven) {
+    if (uroven == 0) {
+        return 0;
+    } else if (uroven == 1) {
+        return 3;
+    }
+    return 5;
 }

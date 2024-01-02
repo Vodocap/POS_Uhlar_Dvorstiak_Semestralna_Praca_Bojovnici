@@ -16,6 +16,8 @@ public:
     double dajRychlostUtokuHodnota(int uroven, int hranica);
     int dajPocetBojovnikov(int uroven, int hranica);
     void vypisStatistiky(int statistika , int uroven);
+    int getCenaUrovne(int uroven);
+
 
 };
 
