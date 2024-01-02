@@ -15,6 +15,8 @@ int main() {
     HracKlient hrac2(50);
     hrac1.vyziadajMeno();
     hrac2.vyziadajMeno();
+    hrac1.vyziadajVolby();
+
     Team team1(hrac1.getMeno(),2);
     Team team2(hrac2.getMeno(),2);
 

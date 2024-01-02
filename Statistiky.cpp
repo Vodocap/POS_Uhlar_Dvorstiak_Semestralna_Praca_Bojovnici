@@ -4,6 +4,7 @@
 
 #include "Statistiky.h"
 
+
 double Statistiky::dajZivotyHodnota(int uroven, int hranica) {
     if (hranica == 0) {
         switch (uroven) {
@@ -18,7 +19,6 @@ double Statistiky::dajZivotyHodnota(int uroven, int hranica) {
         return 10;
     }
     return 0;
-
 }
 
 double Statistiky::dajBrnenieHodnota(int uroven, int hranica) {
