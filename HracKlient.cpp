@@ -4,8 +4,7 @@
 
 #include "HracKlient.h"
 
-HracKlient::HracKlient(std::string paMeno, int peniaze) {
-    this->meno = paMeno;
+HracKlient::HracKlient(int peniaze) {
     this->peniaze = peniaze;
 }
 
@@ -27,14 +26,18 @@ void HracKlient::vyziadajMeno() {
     do {
         std::cout << "Napis svoje meno: " << std::endl;
         std::cin >> pytaneMeno;
-
-    } while (!pytaneMeno.empty());
+    } while (pytaneMeno.empty());
+    this->meno = pytaneMeno;
 }
 
 void HracKlient::vyziadajVolby() {
     //TODO vyziiadaj od hraca ciselka od 0 - 2 styri krat po sebe a uloz ich do atributov
     //    volieb
     // cez volaky do while a cin
+}
+
+const std::string &HracKlient::getMeno() const {
+    return meno;
 }
 
 

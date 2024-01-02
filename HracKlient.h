@@ -8,17 +8,20 @@
 class HracKlient {
 
 public:
-    HracKlient(std::string paMeno, int peniaze);
+    HracKlient(int peniaze);
     void vypisStav();
     int getPeniaze() const;
     void setPeniaze(int peniaze);
     void vyziadajMeno();
     void vyziadajVolby();
 
+
 private:
     int peniaze;
     std::vector<int> volby;
     std::string meno;
+public:
+    const std::string &getMeno() const;
 };
 
 

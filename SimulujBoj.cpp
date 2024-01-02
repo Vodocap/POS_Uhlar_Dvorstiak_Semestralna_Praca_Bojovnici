@@ -49,3 +49,5 @@ void SimulujBoj::vyhodnotVitaza(Team *team1, Team *team2) {
 
 
 }
+
+//TODO prerobit na dve vlakna, kazde bude utocit kym tým nie je prázdny

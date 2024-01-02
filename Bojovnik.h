@@ -10,7 +10,7 @@
 
 class Bojovnik {
 public:
-    Bojovnik(double pZivoty, double pPoskodenie, double pBrnenie, double pUnik, std::string pMeno);
+    Bojovnik(double pZivoty, double pPoskodenie, double pBrnenie, double pUnik,double pRychlostUtoku,std::string pMeno);
     void vypisStav();
     bool zautoc(Bojovnik* bojovnik);
     void setZivoty(double hodnota);
@@ -31,6 +31,14 @@ private:
     double brnenie;
     double unik;
     bool mrtvy;
+    double rychlostUtoku;
+public:
+    void setRychlostUtoku(double rychlostUtoku);
+
+public:
+    double getRychlostUtoku() const;
+
+private:
     std::string meno;
 };
 

@@ -6,12 +6,13 @@
 #include "Bojovnik.h"
 
 
-Bojovnik::Bojovnik(double pZivoty, double pPoskodenie, double pBrnenie, double pUnik, std::string pMeno) {
+Bojovnik::Bojovnik(double pZivoty, double pPoskodenie, double pBrnenie, double pUnik,double pRychlostUtoku,std::string pMeno) {
     this->zivoty = pZivoty;
     this->brnenie = pBrnenie;
     this->poskodenie = pPoskodenie;
     this->unik = pUnik;
     this->mrtvy = false;
+    this->rychlostUtoku = pRychlostUtoku;
     this->meno = pMeno;
 
 }
@@ -96,3 +97,14 @@ void Bojovnik::setMrtvy(bool hodnota) {
 std::string Bojovnik::getMeno() {
     return this->meno;
 }
+
+double Bojovnik::getRychlostUtoku() const {
+    return rychlostUtoku;
+}
+
+void Bojovnik::setRychlostUtoku(double rychlostUtoku) {
+    Bojovnik::rychlostUtoku = rychlostUtoku;
+}
+
+
+//TODO pridat atribut rychlost utoku

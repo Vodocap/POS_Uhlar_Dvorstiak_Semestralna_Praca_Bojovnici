@@ -17,4 +17,9 @@ add_executable(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici
         SpravaTurnaja.h
         SpravaTurnaja.cpp
         HracServer.cpp
+        Statistiky.cpp
+        Statistiky.h
+        Obchod.cpp
+        Obchod.h
+
 )

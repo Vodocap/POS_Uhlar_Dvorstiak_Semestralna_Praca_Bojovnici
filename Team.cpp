@@ -45,15 +45,16 @@ double Team::dajNahodneCisloZIntervalu(double zaciatok, double koniec) {
 }
 
 void Team::vytvorBojovnikov(double dolnaHranicaZivoty, double dolnaHranicaPoskodenie, double dolnaHranicaBrnenie,
-                            double dolnaHranicaUnik, double hornaHranicaZivoty, double hornaHranicaPoskodenie,
-                            double hornaHranicaBrnenie, double hornaHranicaUnik) {
+                            double dolnaHranicaUnik,double dolnaHranicaRychlostUtoku, double hornaHranicaZivoty, double hornaHranicaPoskodenie,
+                            double hornaHranicaBrnenie, double hornaHranicaUnik,double hornaHranicaRychlostUtoku) {
 
     for (int i = 0; i < this->pocet; ++i) {
         std::string nazov = "Bojovnik pouzivatela " + this->meno;
         this->pridajBojovnika(new Bojovnik(this->dajNahodneCisloZIntervalu(dolnaHranicaZivoty, hornaHranicaZivoty),
                                            this->dajNahodneCisloZIntervalu(dolnaHranicaPoskodenie, hornaHranicaPoskodenie),
                                            this->dajNahodneCisloZIntervalu(dolnaHranicaBrnenie, hornaHranicaBrnenie),
-                                           this->dajNahodneCisloZIntervalu(dolnaHranicaUnik, hornaHranicaUnik), nazov));
+                                           this->dajNahodneCisloZIntervalu(dolnaHranicaUnik, hornaHranicaUnik),
+                                           this->dajNahodneCisloZIntervalu(dolnaHranicaRychlostUtoku,hornaHranicaRychlostUtoku),nazov));
     }
 
 }

@@ -16,8 +16,8 @@ public:
     int getVelkostTeamu();
     Bojovnik* dajBojovnikaNaBoj();
     void vymazMrtvychBojovnikov();
-    void vytvorBojovnikov(double dolnaHranicaZivoty, double dolnaHranicaPoskodenie, double dolnaHranicaBrnenie, double dolnaHranicaUnik,
-                          double hornaHranicaZivoty, double hornaHranicaPoskodenie, double hornaHranicaBrnenie, double hornaHranicaUnik);
+    void vytvorBojovnikov(double dolnaHranicaZivoty, double dolnaHranicaPoskodenie, double dolnaHranicaBrnenie, double dolnaHranicaUnik,double dolnaHranicaRychlostUtoku,
+                          double hornaHranicaZivoty, double hornaHranicaPoskodenie, double hornaHranicaBrnenie, double hornaHranicaUnik,double hornaHranicaRychlostUtoku);
     double dajNahodneCisloZIntervalu(double zaciatok, double koniec);
 
 

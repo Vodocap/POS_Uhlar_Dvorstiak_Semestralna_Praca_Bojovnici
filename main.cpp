@@ -5,16 +5,23 @@
 #include "Bojovnik.h"
 #include "Team.h"
 #include "SimulujBoj.h"
+#include "HracKlient.h"
 
 
 int main() {
 
     srand(time(NULL));
-    Team team1("Jozo",2);
-    Team team2("Fero",2);
+    HracKlient hrac1(50);
+    HracKlient hrac2(50);
+    hrac1.vyziadajMeno();
+    hrac2.vyziadajMeno();
+    Team team1(hrac1.getMeno(),2);
+    Team team2(hrac2.getMeno(),2);
 
-    team1.vytvorBojovnikov(2,1,0,0,10,5,2,0.6);
-    team2.vytvorBojovnikov(2,1,0,0,10,5,2,0.6);
+    team1.vytvorBojovnikov(2,1,0,0,0.5,
+                           10,5,2,0.6,1.2);
+    team2.vytvorBojovnikov(2,1,0,0,0.5,
+                           10,5,2,0.6,1.2);
 
     SimulujBoj simulujBoj;
 
