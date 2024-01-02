@@ -3,3 +3,11 @@
 //
 
 #include "HracServer.h"
+
+HracServer::HracServer(int paVolbaZivoty, int paVolbaPoskodenie, int paVolbaBrnenie, int paVolbaUnik) {
+
+}
+
+Team *HracServer::dajTeam() {
+    return this->team;
+}

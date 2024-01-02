@@ -6,8 +6,17 @@
 #define POS_UHLAR_DVORSTIAK_SEMESTRALNA_PRACA_BOJOVNICI_SPRAVATURNAJA_H
 
 
+#include <vector>
+#include "HracServer.h"
+
 class SpravaTurnaja {
 
+public:
+    void prevedBoje();
+    void pridajHraca(HracServer* hracServer);
+
+private:
+    std::vector<HracServer*> hraci;
 };
 
 

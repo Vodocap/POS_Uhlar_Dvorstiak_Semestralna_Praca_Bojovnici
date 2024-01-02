@@ -33,10 +33,8 @@ void HracKlient::vyziadajMeno() {
 
 void HracKlient::vyziadajVolby() {
     //TODO vyziiadaj od hraca ciselka od 0 - 2 styri krat po sebe a uloz ich do atributov
-    //    int volbaZivoty;
-    //    int volbaPoskodenie;
-    //    int volbaBrnenie;
-    //    int volbaUnik;
+    //    volieb
+    // cez volaky do while a cin
 }
 
 

@@ -17,10 +17,7 @@ public:
 
 private:
     int peniaze;
-    int volbaZivoty;
-    int volbaPoskodenie;
-    int volbaBrnenie;
-    int volbaUnik;
+    std::vector<int> volby;
     std::string meno;
 };
 
