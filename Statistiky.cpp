@@ -26,3 +26,7 @@ int Statistiky::dajRychlostUtokuHodnota(int uroven, int hranica) {
 int Statistiky::dajPocetBojovnikov(int uroven, int hranica) {
     return 0;
 }
+
+void Statistiky::vypisStatistiky(int statistika, int uroven) {
+
+}

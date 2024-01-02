@@ -15,6 +15,7 @@ public:
     int dajUnikHodnota(int uroven, int hranica);
     int dajRychlostUtokuHodnota(int uroven, int hranica);
     int dajPocetBojovnikov(int uroven, int hranica);
+    void vypisStatistiky(int statistika , int uroven);
 
 };
 
