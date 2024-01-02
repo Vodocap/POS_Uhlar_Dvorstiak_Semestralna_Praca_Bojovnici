@@ -5,6 +5,13 @@
 #include "Statistiky.h"
 
 int Statistiky::dajZivotyHodnota(int uroven, int hranica) {
+    if (hranica == 0) {
+        switch (uroven) {
+            case 0:
+                return
+        }
+    }
+
 }
 
 int Statistiky::dajBrnenieHodnota(int uroven, int hranica) {
