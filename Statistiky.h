@@ -8,6 +8,14 @@
 
 class Statistiky {
 
+public:
+    int dajZivotyHodnota(int uroven, int hranica);
+    int dajBrnenieHodnota(int uroven, int hranica);
+    int dajPoskodenieHodnota(int uroven, int hranica);
+    int dajUnikHodnota(int uroven, int hranica);
+    int dajRychlostUtokuHodnota(int uroven, int hranica);
+    int dajPocetBojovnikov(int uroven, int hranica);
+
 };
 
 //TODO -5 pismen od hraca
