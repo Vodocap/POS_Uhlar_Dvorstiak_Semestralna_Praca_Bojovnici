@@ -11,8 +11,8 @@
 int main() {
 
     srand(time(NULL));
-    HracKlient hrac1(50);
-    HracKlient hrac2(50);
+    HracKlient hrac1(18);
+    HracKlient hrac2(18);
     hrac1.vyziadajMeno();
     hrac2.vyziadajMeno();
     hrac1.vyziadajVolby();

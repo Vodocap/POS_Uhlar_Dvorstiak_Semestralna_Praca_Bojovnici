@@ -21,5 +21,4 @@ public:
 
 };
 
-//TODO -5 pismen od hraca
 #endif //POS_UHLAR_DVORSTIAK_SEMESTRALNA_PRACA_BOJOVNICI_STATISTIKY_H

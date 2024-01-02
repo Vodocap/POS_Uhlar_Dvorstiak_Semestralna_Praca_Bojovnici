@@ -11,3 +11,6 @@ HracServer::HracServer(int paVolbaZivoty, int paVolbaPoskodenie, int paVolbaBrne
 Team *HracServer::dajTeam() {
     return this->team;
 }
+
+//TODO treba spravit aby sa robil tym,
+//TODO metoda ktora spracuje string cisel

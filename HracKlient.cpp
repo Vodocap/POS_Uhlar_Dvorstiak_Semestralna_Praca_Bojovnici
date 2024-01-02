@@ -4,6 +4,7 @@
 
 #include "HracKlient.h"
 #include "Obchod.h"
+#include "Statistiky.h"
 
 HracKlient::HracKlient(int peniaze) {
     this->peniaze = peniaze;
@@ -32,31 +33,41 @@ void HracKlient::vyziadajMeno() {
 }
 
 void HracKlient::vyziadajVolby() {
-    int hodnota;
+    std::string hodnota;
     Obchod obchod;
+    Statistiky statistiky;
+
     int i = 0;
 
     while (i < 6) {
         obchod.ukazObchod(i);
         do {
+            std::cout << "Mas " <<peniaze <<" penazi" <<std::endl;
             std::cout << "Zadajte hodnotu (0-2): ";
+
             std::cin >> hodnota;
 
-            if (hodnota >= 0 && hodnota <= 2) {
-                volby.push_back(hodnota);
+
+            if (hodnota == "0" || hodnota == "1" || hodnota == "2") {
+                int cislo = std::stoi(hodnota);
+
+                if(statistiky.getCenaUrovne(cislo) > getPeniaze()){
+                    cislo = 0;
+                    std::cout << "Nemate peniaze :( , dava sa defaultna hodnota "<< std::endl;
+                }
+                setPeniaze(peniaze - statistiky.getCenaUrovne(cislo));
+                volby.push_back(cislo);
                 i++;
-                break;  // Ukazuje, že správna hodnota bola zadaná, môžeme pokračovať v ďalšom cykle
+                break;
             } else {
                 std::cout << "Nesprávna hodnota. Zadajte prosím hodnotu od 0 do 2." << std::endl;
+                obchod.ukazObchod(i);
+
             }
         } while (true);
     }
 }
 
-
-    //TODO vyziiadaj od hraca ciselka od 0 - 2 styri krat po sebe a uloz ich do atributov
-    //    volieb
-    // cez volaky do while a cin
 
 
 const std::string &HracKlient::getMeno() const {
@@ -64,3 +75,4 @@ const std::string &HracKlient::getMeno() const {
 }
 
 
+//TODO metoda ktora prerobi vektor na string

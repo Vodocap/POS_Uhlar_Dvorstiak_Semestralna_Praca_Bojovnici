@@ -10,3 +10,4 @@ void Obchod::ukazObchod(int pStatistika) {
         stats.vypisStatistiky(pStatistika, i);
     }
 }
+
