@@ -9,8 +9,12 @@ add_executable(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici
         Bojovnik.cpp
         Team.h
         Team.cpp
-        Hrac.h
-        Hrac.cpp
+        HracKlient.h
+        HracKlient.cpp
         SimulujBoj.h
         SimulujBoj.cpp
+        HracServer.h
+        SpravaTurnaja.h
+        SpravaTurnaja.cpp
+        HracServer.cpp
 )

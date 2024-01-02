@@ -2,27 +2,27 @@
 // Created by matus on 2.1.2024.
 //
 
-#include "Hrac.h"
+#include "HracKlient.h"
 
-Hrac::Hrac(std::string paMeno, int peniaze) {
+HracKlient::HracKlient(std::string paMeno, int peniaze) {
     this->meno = paMeno;
     this->peniaze = peniaze;
 }
 
-void Hrac::vypisStav() {
-    std::cout << "Hrac " << this->meno << "ma tolkoto penazi: " <<std::endl;
+void HracKlient::vypisStav() {
+    std::cout << "HracKlient " << this->meno << "ma tolkoto penazi: " <<std::endl;
 
 }
 
-int Hrac::getPeniaze() const {
+int HracKlient::getPeniaze() const {
     return peniaze;
 }
 
-void Hrac::setPeniaze(int peniaze) {
-    Hrac::peniaze = peniaze;
+void HracKlient::setPeniaze(int peniaze) {
+    HracKlient::peniaze = peniaze;
 }
 
-void Hrac::vyziadajMeno() {
+void HracKlient::vyziadajMeno() {
     std::string pytaneMeno;
     do {
         std::cout << "Napis svoje meno: " << std::endl;
@@ -31,7 +31,7 @@ void Hrac::vyziadajMeno() {
     } while (!pytaneMeno.empty());
 }
 
-void Hrac::vyziadajVolby() {
+void HracKlient::vyziadajVolby() {
     //TODO vyziiadaj od hraca ciselka od 0 - 2 styri krat po sebe a uloz ich do atributov
     //    int volbaZivoty;
     //    int volbaPoskodenie;
