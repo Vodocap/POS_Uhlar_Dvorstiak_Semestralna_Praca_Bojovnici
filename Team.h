@@ -14,6 +14,7 @@ public:
     bool pridajBojovnika(Bojovnik* bojovnik);
     void odoberBojovnikaNaIndexe(int index);
     int getVelkostTeamu();
+    Bojovnik* dajBojovnikaNaBoj();
     void vymazMrtvychBojovnikov();
     void vytvorBojovnikov(double dolnaHranicaZivoty, double dolnaHranicaPoskodenie, double dolnaHranicaBrnenie, double dolnaHranicaUnik,
                           double hornaHranicaZivoty, double hornaHranicaPoskodenie, double hornaHranicaBrnenie, double hornaHranicaUnik);
@@ -23,6 +24,10 @@ public:
 
 private:
     std::string meno;
+public:
+    const std::string &getMeno() const;
+
+private:
     std::vector<Bojovnik*> teamBojovnikov;
     int pocet;
 

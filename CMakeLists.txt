@@ -12,4 +12,5 @@ add_executable(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici
         Hrac.h
         Hrac.cpp
         SimulujBoj.h
-        SimulujBoj.cpp)
+        SimulujBoj.cpp
+)

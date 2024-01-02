@@ -50,10 +50,18 @@ void Team::vytvorBojovnikov(double dolnaHranicaZivoty, double dolnaHranicaPoskod
 
     for (int i = 0; i < this->pocet; ++i) {
         std::string nazov = "Bojovnik pouzivatela " + this->meno;
-        this->teamBojovnikov.push_back(new Bojovnik(this->dajNahodneCisloZIntervalu(dolnaHranicaZivoty, hornaHranicaZivoty),
-                                                    this->dajNahodneCisloZIntervalu(dolnaHranicaPoskodenie, hornaHranicaPoskodenie),
-                                                    this->dajNahodneCisloZIntervalu(dolnaHranicaBrnenie, hornaHranicaPoskodenie),
-                                                    this->dajNahodneCisloZIntervalu(dolnaHranicaUnik, hornaHranicaUnik), nazov));
+        this->pridajBojovnika(new Bojovnik(this->dajNahodneCisloZIntervalu(dolnaHranicaZivoty, hornaHranicaZivoty),
+                                           this->dajNahodneCisloZIntervalu(dolnaHranicaPoskodenie, hornaHranicaPoskodenie),
+                                           this->dajNahodneCisloZIntervalu(dolnaHranicaBrnenie, hornaHranicaBrnenie),
+                                           this->dajNahodneCisloZIntervalu(dolnaHranicaUnik, hornaHranicaUnik), nazov));
     }
 
+}
+
+const std::string &Team::getMeno() const {
+    return meno;
+}
+
+Bojovnik *Team::dajBojovnikaNaBoj() {
+    return this->teamBojovnikov.at(0);
 }

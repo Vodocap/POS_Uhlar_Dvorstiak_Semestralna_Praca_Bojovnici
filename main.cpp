@@ -3,20 +3,22 @@
 //
 
 #include "Bojovnik.h"
+#include "Team.h"
+#include "SimulujBoj.h"
 
 
 int main() {
-    Bojovnik bojovnik1(10, 5, 0, 0.8, "Bojovnik hraca jozo");
-    Bojovnik bojovnik2(8, 6, 0, 0.5, "Bojovnik hraca fero");
 
-    bojovnik1.zautoc(&bojovnik2);
-    bojovnik2.zautoc(&bojovnik1);
-    bojovnik1.zautoc(&bojovnik2);
-    bojovnik2.zautoc(&bojovnik1);
+    srand(time(NULL));
+    Team team1("Jozo",2);
+    Team team2("Fero",2);
 
-    bojovnik1.vypisStav();
-    bojovnik2.vypisStav();
+    team1.vytvorBojovnikov(2,1,0,0,10,5,2,0.6);
+    team2.vytvorBojovnikov(2,1,0,0,10,5,2,0.6);
 
+    SimulujBoj simulujBoj;
+
+    simulujBoj.simulujBoj(&team1, &team2);
 
 
     return 0;

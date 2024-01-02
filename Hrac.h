@@ -12,10 +12,15 @@ public:
     void vypisStav();
     int getPeniaze() const;
     void setPeniaze(int peniaze);
+    void vyziadajMeno();
+    void vyziadajVolby();
 
 private:
-    Team* team;
     int peniaze;
+    int volbaZivoty;
+    int volbaPoskodenie;
+    int volbaBrnenie;
+    int volbaUnik;
     std::string meno;
 };
 
