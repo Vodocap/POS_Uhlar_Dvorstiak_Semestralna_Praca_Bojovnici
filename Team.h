@@ -16,20 +16,28 @@ public:
     int getVelkostTeamu();
     Bojovnik* dajBojovnikaNaBoj();
     void vymazMrtvychBojovnikov();
-    void vytvorBojovnikov(double dolnaHranicaZivoty, double dolnaHranicaPoskodenie, double dolnaHranicaBrnenie, double dolnaHranicaUnik,double dolnaHranicaRychlostUtoku,
-                          double hornaHranicaZivoty, double hornaHranicaPoskodenie, double hornaHranicaBrnenie, double hornaHranicaUnik,double hornaHranicaRychlostUtoku);
+    void vytvorBojovnikov(double paDolnaHranicaZivoty, double paDolnaHranicaPoskodenie, double paDolnaHranicaBrnenie, double paDolnaHranicaUnik,double paDolnaHranicaRychlostUtoku,
+                          double paHornaHranicaZivoty, double paHornaHranicaPoskodenie, double paHornaHranicaBrnenie, double paHornaHranicaUnik,double paHornaHranicaRychlostUtoku);
     double dajNahodneCisloZIntervalu(double zaciatok, double koniec);
+    void prirpavTeamNaDalsiBoj();
+    const std::string &getMeno() const;
 
 
 
 private:
     std::string meno;
-public:
-    const std::string &getMeno() const;
-
-private:
     std::vector<Bojovnik*> teamBojovnikov;
     int pocet;
+    double dolnaHranicaZivoty;
+    double dolnaHranicaPoskodenie;
+    double dolnaHranicaBrnenie;
+    double dolnaHranicaUnik;
+    double dolnaHranicaRychlostUtoku;
+    double hornaHranicaZivoty;
+    double hornaHranicaPoskodenie;
+    double hornaHranicaBrnenie;
+    double hornaHranicaUnik;
+    double hornaHranicaRychlostUtoku;
 
 
 

@@ -48,6 +48,16 @@ void Team::vytvorBojovnikov(double dolnaHranicaZivoty, double dolnaHranicaPoskod
                             double dolnaHranicaUnik,double dolnaHranicaRychlostUtoku, double hornaHranicaZivoty, double hornaHranicaPoskodenie,
                             double hornaHranicaBrnenie, double hornaHranicaUnik,double hornaHranicaRychlostUtoku) {
 
+    this->dolnaHranicaZivoty = dolnaHranicaZivoty;
+    this->dolnaHranicaBrnenie = dolnaHranicaBrnenie;
+    this->dolnaHranicaPoskodenie = dolnaHranicaPoskodenie;
+    this->dolnaHranicaUnik = dolnaHranicaUnik;
+    this->dolnaHranicaRychlostUtoku = dolnaHranicaRychlostUtoku;
+    this->hornaHranicaZivoty = hornaHranicaZivoty;
+    this->hornaHranicaBrnenie = hornaHranicaBrnenie;
+    this->hornaHranicaPoskodenie = hornaHranicaPoskodenie;
+    this->hornaHranicaUnik = hornaHranicaUnik;
+    this->hornaHranicaRychlostUtoku = hornaHranicaRychlostUtoku;
     for (int i = 0; i < this->pocet; ++i) {
         std::string nazov = "Bojovnik pouzivatela " + this->meno;
         this->pridajBojovnika(new Bojovnik(this->dajNahodneCisloZIntervalu(dolnaHranicaZivoty, hornaHranicaZivoty),
@@ -65,4 +75,14 @@ const std::string &Team::getMeno() const {
 
 Bojovnik *Team::dajBojovnikaNaBoj() {
     return this->teamBojovnikov.at(0);
+}
+
+void Team::prirpavTeamNaDalsiBoj() {
+    for (int i = 0; i < this->teamBojovnikov.size(); ++i) {
+        this->teamBojovnikov.pop_back();
+    }
+    this->vytvorBojovnikov(this->dolnaHranicaZivoty, this->dolnaHranicaPoskodenie, this->dolnaHranicaBrnenie,
+                           this->dolnaHranicaUnik, this->dolnaHranicaRychlostUtoku, this->hornaHranicaZivoty,
+                           this->hornaHranicaPoskodenie, this->hornaHranicaBrnenie, this->hornaHranicaUnik, this->hornaHranicaRychlostUtoku);
+
 }
