@@ -17,26 +17,34 @@ Bojovnik::Bojovnik(double pZivoty, double pPoskodenie, double pBrnenie, double p
 
 }
 
-bool Bojovnik::zautoc(Bojovnik *bojovnik) {
+bool Bojovnik::zautoc(Bojovnik* bojovnik) {
     if (this->mrtvy) {
-        std::cout << "mrtvi neutocia..." << std::endl;
+        std::cout << "\033[1;31m☠️ Mŕtvi neutočia...\033[0m" << std::endl;
         return false;
     }
-    std::cout << this->meno << " utoci na " << bojovnik->getMeno() << std::endl;
-    double nahodneCislo = ((double)std::rand() / RAND_MAX);
-    if (nahodneCislo < bojovnik->getUnik()) {
-        std::cout << bojovnik->getMeno() <<" sa vyhol utoku" << std::endl;
-        return true;
-    }
-    bojovnik->setZivoty(bojovnik->getZivoty() - (this->poskodenie - bojovnik->getBrnenie()));
-    std::cout << this->meno << " Ustedril taketo (" << this->poskodenie - bojovnik->getBrnenie() << ") poskodenie pre --->" << bojovnik->getMeno() << std::endl;
-    this->vypisStav();
-    if (bojovnik->getMrtvy()) {
-        std::cout << bojovnik->getMeno() <<" zomrel" << std::endl;
-        return true;
-    }
-    bojovnik->vypisStav();
 
+    std::cout << "\033[1;34m⚔️ " << this->meno << " útočí na " << bojovnik->getMeno() << "\033[0m" << std::endl;
+
+    double nahodneCislo = static_cast<double>(std::rand()) / RAND_MAX;
+
+    if (nahodneCislo < bojovnik->getUnik()) {
+        std::cout << "\033[1;32m🤺 " << bojovnik->getMeno() << " sa vyhol útoku\033[0m" << std::endl;
+        return true;
+    }
+
+    double poskodeniePoObrane = this->poskodenie - bojovnik->getBrnenie();
+    bojovnik->setZivoty(bojovnik->getZivoty() - (poskodeniePoObrane));
+
+    std::cout << "\033[1;31m💔 " << this->meno << " udrel za (" << poskodeniePoObrane << ") poškodenie pre ---> " << bojovnik->getMeno() << "\033[0m" << std::endl; // Červená farba a emoji pre zlomené srdce pre poškodenie
+    this->vypisStav();
+
+    if (bojovnik->getMrtvy()) {
+        std::cout << "\033[1;31m☠️ " << bojovnik->getMeno() << " zomrel\033[0m" << std::endl; // Červená farba a emoji pre mŕtveho bojovníka
+        return true;
+    }
+
+    bojovnik->vypisStav();
+    return false;
 }
 
 void Bojovnik::setZivoty(double hodnota) {
@@ -80,10 +88,10 @@ void Bojovnik::vypisStav() {
         std::cout << "Mrtvy bojovnik" << std::endl;
         return;
     }
-    std::cout << this->meno << std::endl;
-    std::cout << "Životy: " << this->zivoty << std::endl;
+    //std::cout << this->meno << std::endl;
+    //std::cout << "Životy: " << this->zivoty << std::endl;
     //std::cout << "Brnenie: " << this->brnenie << std::endl;
-    std::cout << "Poškodenie: " << this->poskodenie << std::endl;
+    //std::cout << "Poškodenie: " << this->poskodenie << std::endl;
     //std::cout << "Šanca na únik: " << (this->unik * 100) << "%" << std::endl;
 
 }

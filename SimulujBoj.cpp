@@ -42,11 +42,12 @@ const std::string &SimulujBoj::getVitaz() const {
 
 void SimulujBoj::utocPrvy(void *sharedData) {
     ThreadData* threadData = (ThreadData*) sharedData;
+    std::cout << "------------------------" << std::endl;
+    std::cout << "Tím " << threadData->getTeam1()->getMeno() << " vs. Tím " << threadData->getTeam2()->getMeno() << std::endl;
+    std::cout << "------------------------" << std::endl;
+
     while (threadData->getTeam1()->getVelkostTeamu() != 0 || !threadData->isKonec()) {
-
-
-        std::cout << "Bojovnik hraca " << threadData->getTeam1()->getMeno() << " sa pripravuje na utok " << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(3));
+        std::this_thread::sleep_for(std::chrono::duration<double>(threadData->getTeam1()->dajBojovnikaNaBoj()->getRychlostUtoku()));
         //std::this_thread::sleep_for(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::duration<double>(threadData->getTeam2()->dajBojovnikaNaBoj()->getRychlostUtoku())));
         std::unique_lock<std::mutex> lock(threadData->getMutex());
         if (threadData->getTeam1()->getVelkostTeamu() == 0 || threadData->getTeam2()->getVelkostTeamu() == 0) {
@@ -56,8 +57,11 @@ void SimulujBoj::utocPrvy(void *sharedData) {
         threadData->getTeam1()->dajBojovnikaNaBoj()->zautoc(threadData->getTeam2()->dajBojovnikaNaBoj());
         threadData->getTeam1()->vymazMrtvychBojovnikov();
         lock.unlock();
-        std::cout << "Tim hraca " << threadData->getTeam1()->getMeno() << " Ma teraz tolkoto bojovnikov " << threadData->getTeam1()->getVelkostTeamu() << std::endl;
-        std::cout << "Tim hraca " << threadData->getTeam2()->getMeno() << " Ma teraz tolkoto bojovnikov " << threadData->getTeam2()->getVelkostTeamu() << std::endl;
+        std::cout << "------------------------" << std::endl;
+        std::cout << "Tím " << threadData->getTeam1()->getMeno() << " má " << threadData->getTeam1()->getVelkostTeamu() << " bojovníkov." << std::endl;
+        std::cout << "Tím " << threadData->getTeam2()->getMeno() << " má " << threadData->getTeam2()->getVelkostTeamu() << " bojovníkov." << std::endl;
+        std::cout << "------------------------" << std::endl;
+
 
     }
     std::unique_lock<std::mutex> lock(threadData->getMutex());
@@ -70,20 +74,20 @@ void SimulujBoj::utocPrvy(void *sharedData) {
 void SimulujBoj::utocDruhy(void *sharedData) {
     ThreadData* threadData = (ThreadData*) sharedData;
     while (threadData->getTeam2()->getVelkostTeamu() != 0 || !threadData->isKonec()) {
-
-        std::cout << "Bojovnik hraca " << threadData->getTeam2()->getMeno() << " sa pripravuje na utok " << std::endl;
         if (threadData->getTeam1()->getVelkostTeamu() == 0 || threadData->getTeam2()->getVelkostTeamu() == 0) {
             threadData->setKonec(true);
             break;
         }
-        std::this_thread::sleep_for(std::chrono::seconds(4));
+        std::this_thread::sleep_for(std::chrono::duration<double>(threadData->getTeam2()->dajBojovnikaNaBoj()->getRychlostUtoku()));
         //std::this_thread::sleep_for(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::duration<double>(threadData->getTeam2()->dajBojovnikaNaBoj()->getRychlostUtoku())));
         std::unique_lock<std::mutex> lock(threadData->getMutex());
         threadData->getTeam2()->dajBojovnikaNaBoj()->zautoc(threadData->getTeam1()->dajBojovnikaNaBoj());
         threadData->getTeam2()->vymazMrtvychBojovnikov();
         lock.unlock();
-        std::cout << "Tim hraca " << threadData->getTeam1()->getMeno() << " Ma teraz tolkoto bojovnikov " << threadData->getTeam1()->getVelkostTeamu() << std::endl;
-        std::cout << "Tim hraca " << threadData->getTeam2()->getMeno() << " Ma teraz tolkoto bojovnikov " << threadData->getTeam2()->getVelkostTeamu() << std::endl;
+        std::cout << "------------------------" << std::endl;
+        std::cout << "Tím " << threadData->getTeam1()->getMeno() << " má " << threadData->getTeam1()->getVelkostTeamu() << " bojovníkov." << std::endl;
+        std::cout << "Tím " << threadData->getTeam2()->getMeno() << " má " << threadData->getTeam2()->getVelkostTeamu() << " bojovníkov." << std::endl;
+        std::cout << "------------------------" << std::endl;
     }
     std::unique_lock<std::mutex> lock(threadData->getMutex());
     threadData->setKonec(true);
