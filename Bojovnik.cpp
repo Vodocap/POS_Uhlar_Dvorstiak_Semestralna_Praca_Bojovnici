@@ -107,4 +107,3 @@ void Bojovnik::setRychlostUtoku(double rychlostUtoku) {
 }
 
 
-//TODO pridat atribut rychlost utoku
