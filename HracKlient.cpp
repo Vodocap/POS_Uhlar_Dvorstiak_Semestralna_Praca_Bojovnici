@@ -74,10 +74,10 @@ const std::string &HracKlient::getMeno() const {
     return meno;
 }
 
-std::string HracKlient::getVolba(std::vector<int> vektor) {
+std::string HracKlient::getVolba() {
     std::string volba;
-    for (int i = 0; i < vektor.size(); ++i) {
-        volba += std::to_string(vektor[i]);
+    for (int i = 0; i < this->volby.size(); ++i) {
+        volba += std::to_string(this->volby[i]);
     }
     return volba;
 }
