@@ -17,11 +17,10 @@ void SpravaTurnaja::prevedBoje() {
             } else{
                 this->hraci[j]->setSkore(this->hraci[j]->getSkore()+1);
             }
-            hraci[i]->dajTeam()->prirpavTeamNaDalsiBoj();
-            hraci[j]->dajTeam()->prirpavTeamNaDalsiBoj();
         }
 
     }
+    // Postupne sa spravi simuluj boj kazdeho hraca s kazdym. Bude bodovanie a na konci sa vyhodnoti ktory hrac vyhral cely turnaj
 }
 
 void SpravaTurnaja::pridajHraca(HracServer* hracServer) {
@@ -38,6 +37,6 @@ void SpravaTurnaja::vyhodnotTurnaj() {
         }
     }
 
-    std::cout<<"VITAZOM TURNAJA SA STAVA :  "<<hraci[maxIndex]->getMeno()<<std::endl;
+    std::cout<<"Vyhral "<<hraci[maxIndex]->getMeno()<<std::endl;
 
 }

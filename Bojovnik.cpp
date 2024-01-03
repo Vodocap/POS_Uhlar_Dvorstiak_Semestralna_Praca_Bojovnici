@@ -19,6 +19,7 @@ Bojovnik::Bojovnik(double pZivoty, double pPoskodenie, double pBrnenie, double p
 
 bool Bojovnik::zautoc(Bojovnik *bojovnik) {
     if (this->mrtvy) {
+        std::cout << "mrtvi neutocia..." << std::endl;
         return false;
     }
     std::cout << this->meno << " utoci na " << bojovnik->getMeno() << std::endl;
@@ -28,6 +29,7 @@ bool Bojovnik::zautoc(Bojovnik *bojovnik) {
         return true;
     }
     bojovnik->setZivoty(bojovnik->getZivoty() - (this->poskodenie - bojovnik->getBrnenie()));
+    std::cout << this->meno << " Ustedril taketo (" << this->poskodenie - bojovnik->getBrnenie() << ") poskodenie pre --->" << bojovnik->getMeno() << std::endl;
     this->vypisStav();
     if (bojovnik->getMrtvy()) {
         std::cout << bojovnik->getMeno() <<" zomrel" << std::endl;
@@ -80,9 +82,9 @@ void Bojovnik::vypisStav() {
     }
     std::cout << this->meno << std::endl;
     std::cout << "Životy: " << this->zivoty << std::endl;
-    std::cout << "Brnenie: " << this->brnenie << std::endl;
+    //std::cout << "Brnenie: " << this->brnenie << std::endl;
     std::cout << "Poškodenie: " << this->poskodenie << std::endl;
-    std::cout << "Šanca na únik: " << (this->unik * 100) << "%" << std::endl;
+    //std::cout << "Šanca na únik: " << (this->unik * 100) << "%" << std::endl;
 
 }
 
