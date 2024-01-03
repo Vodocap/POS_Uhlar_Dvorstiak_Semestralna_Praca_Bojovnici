@@ -91,4 +91,4 @@ void SimulujBoj::utocDruhy(void *sharedData) {
 
 }
 
-// TODO treba pridat aby attack speed fungoval
+//TODO spravit LEPSI VYPIS!
