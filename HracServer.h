@@ -19,8 +19,17 @@ public:
 
 private:
     std::string meno;
+public:
+    const std::string &getMeno() const;
+
+private:
     Team* team;
     Statistiky statistiky;
+    int skore;
+public:
+    int getSkore() const;
+
+    void setSkore(int skore);
 
 };
 

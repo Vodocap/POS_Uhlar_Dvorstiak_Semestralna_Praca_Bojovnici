@@ -14,6 +14,10 @@ public:
 private:
     void vyhodnotVitaza(Team* team1, Team* team2);
     std::string vitaz;
+public:
+    const std::string &getVitaz() const;
+
+    void setVitaz(const std::string &vitaz);
 };
 
 

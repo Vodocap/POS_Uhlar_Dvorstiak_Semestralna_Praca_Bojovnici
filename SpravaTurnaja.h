@@ -8,13 +8,13 @@
 
 #include <vector>
 #include "HracServer.h"
-
+#include "SimulujBoj.h"
 class SpravaTurnaja {
 
 public:
     void prevedBoje();
     void pridajHraca(HracServer* hracServer);
-
+    void vyhodnotTurnaj();
 private:
     std::vector<HracServer*> hraci;
 };

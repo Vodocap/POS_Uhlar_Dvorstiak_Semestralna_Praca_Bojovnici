@@ -50,4 +50,11 @@ void SimulujBoj::vyhodnotVitaza(Team *team1, Team *team2) {
 
 }
 
+const std::string &SimulujBoj::getVitaz() const {
+    return vitaz;
+}
+
+
+
+
 //TODO prerobit na dve vlakna, kazde bude utocit kym tým nie je prázdny

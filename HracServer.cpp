@@ -19,6 +19,18 @@ Team *HracServer::dajTeam() {
     return this->team;
 }
 
+int HracServer::getSkore() const {
+    return skore;
+}
+
+void HracServer::setSkore(int skore) {
+    HracServer::skore = skore;
+}
+
+const std::string &HracServer::getMeno() const {
+    return meno;
+}
+
 
 
 
