@@ -28,6 +28,7 @@ void SpravaTurnaja::pridajHraca(HracServer* hracServer) {
 }
 
 void SpravaTurnaja::vyhodnotTurnaj() {
+    int pocitadlo = 0;
     int max = 0;
     int maxIndex = 0;
     for (int i = 0; i < this->hraci.size(); ++i) {
@@ -36,7 +37,18 @@ void SpravaTurnaja::vyhodnotTurnaj() {
             maxIndex = i;
         }
     }
+    for (int i = 0; i < hraci.size(); ++i) {
 
-    std::cout<<"Vyhral "<<hraci[maxIndex]->getMeno()<<std::endl;
+        if (max == hraci[i]->getSkore()){
+            pocitadlo++;
+        }
+    }
+    if (pocitadlo > 1){
+        std::cout<<"Hra skoncila remizou"<<std::endl;
+    } else{
+        std::cout<<"Vyhral "<<hraci[maxIndex]->getMeno()<<std::endl;
+    }
+
+
 
 }
