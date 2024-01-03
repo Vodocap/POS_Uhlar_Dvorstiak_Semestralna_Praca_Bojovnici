@@ -5,11 +5,16 @@
 #ifndef POS_UHLAR_DVORSTIAK_SEMESTRALNA_PRACA_BOJOVNICI_SIMULUJBOJ_H
 #define POS_UHLAR_DVORSTIAK_SEMESTRALNA_PRACA_BOJOVNICI_SIMULUJBOJ_H
 #include "Team.h"
+#include "ThreadData.h"
+#include <iostream>
 
 class SimulujBoj {
 
 public:
-    void simulujBoj(Team* team1, Team* team2);
+    void simulujBoj(void* sharedData);
+    static void utocPrvy(void* sharedData);
+    static void utocDruhy(void* sharedData);
+
 
 private:
     void vyhodnotVitaza(Team* team1, Team* team2);
@@ -17,7 +22,6 @@ private:
 public:
     const std::string &getVitaz() const;
 
-    void setVitaz(const std::string &vitaz);
 };
 
 

@@ -7,6 +7,7 @@
 #include "SimulujBoj.h"
 #include "HracKlient.h"
 #include "HracServer.h"
+#include "ThreadData.h"
 
 
 int main() {
@@ -22,8 +23,9 @@ int main() {
     HracServer hracServer2(hrac2.getVolba(), hrac2.getMeno());
 
     SimulujBoj simulujBoj;
+    ThreadData threadData(hracServer1.dajTeam(), hracServer2.dajTeam());
 
-    simulujBoj.simulujBoj(hracServer1.dajTeam(), hracServer2.dajTeam());
+    simulujBoj.simulujBoj(&threadData);
 
 
     return 0;
