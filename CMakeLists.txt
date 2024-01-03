@@ -3,6 +3,9 @@ project(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici)
 
 set(CMAKE_CXX_STANDARD 14)
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
 add_executable(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici
         main.cpp
         Bojovnik.h
@@ -21,5 +24,9 @@ add_executable(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici
         Statistiky.h
         Obchod.cpp
         Obchod.h
+        ThreadData.h
+        ThreadData.cpp
 
 )
+
+target_link_libraries(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici PRIVATE Threads::Threads)

@@ -5,32 +5,23 @@
 #include "SimulujBoj.h"
 #include "Team.h"
 
-void SimulujBoj::simulujBoj(Team* team1, Team* team2) {
+void SimulujBoj::simulujBoj(void* sharedData) {
+    ThreadData* threadData = (ThreadData*) sharedData;
 
-    if (team1->getVelkostTeamu() > 0 && team2->getVelkostTeamu() > 0) {
+    if (threadData->getTeam1()->getVelkostTeamu() > 0 && threadData->getTeam2()->getVelkostTeamu() > 0) {
 
-        Team* prvyTeam = team1;
-        Team* druhyTeam = team2;
+        Team* prvyTeam = threadData->getTeam1();
+        Team* druhyTeam = threadData->getTeam2();
         if ((rand() % 2) == 1) {
-            std::cout << "Zacina team hraca " << team2->getMeno();
-            prvyTeam = team2;
-            druhyTeam = team1;
+            std::cout << "Zacina team hraca " << threadData->getTeam2()->getMeno();
+            prvyTeam = threadData->getTeam2();
+            druhyTeam = threadData->getTeam1();
         }
 
-        while (prvyTeam->getVelkostTeamu() != 0 || druhyTeam->getVelkostTeamu() != 0) {
-            prvyTeam->dajBojovnikaNaBoj()->zautoc(druhyTeam->dajBojovnikaNaBoj());
-            druhyTeam->dajBojovnikaNaBoj()->zautoc(prvyTeam->dajBojovnikaNaBoj());
-            prvyTeam->vymazMrtvychBojovnikov();
-            druhyTeam->vymazMrtvychBojovnikov();
-            std::cout << prvyTeam->getVelkostTeamu() << std::endl;
-            std::cout << druhyTeam->getVelkostTeamu() << std::endl;
-
-            if (prvyTeam->getVelkostTeamu() == 0 || druhyTeam->getVelkostTeamu() == 0) {
-                break;
-            }
-
-        }
-
+        std::thread thUtoc1(utocPrvy, std::ref(threadData));
+        std::thread thUtoc2(utocDruhy, std::ref(threadData));
+        thUtoc1.join();
+        thUtoc2.join();
         this->vyhodnotVitaza(prvyTeam, druhyTeam);
         std::cout << "Tento zapas vyhral " << this->vitaz << std::endl;
 
@@ -54,7 +45,56 @@ const std::string &SimulujBoj::getVitaz() const {
     return vitaz;
 }
 
+void SimulujBoj::utocPrvy(void *sharedData) {
+    ThreadData* threadData = (ThreadData*) sharedData;
+    while (threadData->getTeam1()->getVelkostTeamu() != 0 || !threadData->isKonec()) {
+
+        std::cout << "Bojovnik sa pripravuje na utok " << std::endl;
+        std::this_thread::sleep_for(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::duration<double>(threadData->getTeam2()->dajBojovnikaNaBoj()->getRychlostUtoku())));
+        std::unique_lock<std::mutex> lock(threadData->getMutex());
+        threadData->getTeam1()->vymazMrtvychBojovnikov();
+        while (!threadData->getTeam1()->dajBojovnikaNaBoj()->zautoc(threadData->getTeam2()->dajBojovnikaNaBoj())) {
+            std::cout << "Je konec " << std::endl;
+            threadData->getMozeutocit().wait(lock);
+        }
+        threadData->getNemozeUtocit().notify_one();
+
+        lock.unlock();
+        if (threadData->isKonec()) {
+            break;
+        }
+    }
+    std::unique_lock<std::mutex> lock(threadData->getMutex());
+    threadData->setKonec(true);
+    lock.unlock();
+
+
+}
+
+void SimulujBoj::utocDruhy(void *sharedData) {
+    ThreadData* threadData = (ThreadData*) sharedData;
+    while (threadData->getTeam2()->getVelkostTeamu() != 0 || !threadData->isKonec()) {
+
+        std::cout << "Bojovnik sa pripravuje na utok " << std::endl;
+        std::this_thread::sleep_for(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::duration<double>(threadData->getTeam2()->dajBojovnikaNaBoj()->getRychlostUtoku())));
+        std::unique_lock<std::mutex> lock(threadData->getMutex());
+        threadData->getTeam2()->vymazMrtvychBojovnikov();
+        while (!threadData->getTeam2()->dajBojovnikaNaBoj()->zautoc(threadData->getTeam1()->dajBojovnikaNaBoj())) {
+            std::cout << "Je konec " << std::endl;
+            threadData->getMozeutocit().wait(lock);
+        }
+        threadData->getNemozeUtocit().notify_one();
+        lock.unlock();
+        if (threadData->isKonec()) {
+            break;
+        }
+    }
+    std::unique_lock<std::mutex> lock(threadData->getMutex());
+    threadData->setKonec(true);
+    lock.unlock();
+
+}
 
 
 
-//TODO prerobit na dve vlakna, kazde bude utocit kym tým nie je prázdny
+
