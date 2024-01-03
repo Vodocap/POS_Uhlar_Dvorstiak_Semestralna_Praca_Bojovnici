@@ -73,14 +73,14 @@ double Statistiky::dajRychlostUtokuHodnota(int uroven, int hranica) {
     if (hranica == 1) {
         switch (uroven) {
             case 0:
-                return 2.5;
+                return 4;
             case 1:
-                return 1.0;
+                return 3;
             case 2:
-                return 0.5;
+                return 2;
         }
     } else {
-        return 0;
+        return 1.5;
     }
     return 0;
 }
