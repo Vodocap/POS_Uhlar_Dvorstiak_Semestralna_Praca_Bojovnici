@@ -15,7 +15,7 @@ public:
     void setPeniaze(int peniaze);
     void vyziadajMeno();
     void vyziadajVolby();
-
+    std::string getVolba(std::vector<int>);
 
 private:
     int peniaze;

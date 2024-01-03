@@ -74,5 +74,10 @@ const std::string &HracKlient::getMeno() const {
     return meno;
 }
 
-
-//TODO metoda ktora prerobi vektor na string
+std::string HracKlient::getVolba(std::vector<int> vektor) {
+    std::string volba;
+    for (int i = 0; i < vektor.size(); ++i) {
+        volba += std::to_string(vektor[i]);
+    }
+    return volba;
+}

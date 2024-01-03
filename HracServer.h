@@ -12,8 +12,9 @@
 class HracServer {
 
 public:
-    HracServer(int paVolbaZivoty, int paVolbaPoskodenie, int paVolbaBrnenie, int paVolbaUnik);
+    HracServer(std::string volby);
     Team* dajTeam();
+    std::vector<int> spracujStringNaCisla(std::string volba);
 
 private:
     std::vector<int> volby;
