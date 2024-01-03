@@ -8,18 +8,19 @@
 
 #include <string>
 #include "Team.h"
+#include "Statistiky.h"
 
 class HracServer {
 
 public:
-    HracServer(std::string volby);
+    HracServer(std::string volby, std::string paMeno);
     Team* dajTeam();
-    std::vector<int> spracujStringNaCisla(std::string volba);
+
 
 private:
-    std::vector<int> volby;
     std::string meno;
     Team* team;
+    Statistiky statistiky;
 
 };
 
