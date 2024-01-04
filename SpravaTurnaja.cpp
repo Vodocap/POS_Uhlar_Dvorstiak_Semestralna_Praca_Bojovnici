@@ -8,19 +8,23 @@
 void SpravaTurnaja::prevedBoje() {
     SimulujBoj boj;
     for (int i = 0; i < this->hraci.size(); ++i) {
-        for (int j = 0; j < this->hraci.size() && i != j; ++j) {
-            ThreadData threadData(this->hraci[i]->dajTeam(), this->hraci[j]->dajTeam());
-            boj.simulujBoj(&threadData);
-
-            if (boj.getVitaz() == this->hraci[i]->getMeno()){
-                this->hraci[i]->setSkore(this->hraci[i]->getSkore()+1);
-            } else{
-                this->hraci[j]->setSkore(this->hraci[j]->getSkore()+1);
+        for (int j = 0; j < this->hraci.size(); ++j) {
+            std::cout<<i<<std::endl;
+            std::cout<<j<<std::endl;
+            if (i != j){
+                boj.simulujBoj(new ThreadData(this->hraci[i]->dajTeam(), this->hraci[j]->dajTeam()));
+                this->hraci[i]->dajTeam()->prirpavTeamNaDalsiBoj();
+                this->hraci[j]->dajTeam()->prirpavTeamNaDalsiBoj();
+                if (boj.getVitaz() == this->hraci[i]->getMeno()){
+                    this->hraci[i]->setSkore(this->hraci[i]->getSkore()+1);
+                } else{
+                    this->hraci[j]->setSkore(this->hraci[j]->getSkore()+1);
+                }
             }
         }
 
+
     }
-    // Postupne sa spravi simuluj boj kazdeho hraca s kazdym. Bude bodovanie a na konci sa vyhodnoti ktory hrac vyhral cely turnaj
 }
 
 void SpravaTurnaja::pridajHraca(HracServer* hracServer) {

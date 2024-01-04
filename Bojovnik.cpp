@@ -19,7 +19,7 @@ Bojovnik::Bojovnik(double pZivoty, double pPoskodenie, double pBrnenie, double p
 
 bool Bojovnik::zautoc(Bojovnik* bojovnik) {
     if (this->mrtvy) {
-        std::cout << "\033[1;31m☠️ Mŕtvi neutočia...\033[0m" << std::endl;
+        //std::cout << "\033[1;31m☠️ Mŕtvi neutočia...\033[0m" << std::endl;
         return false;
     }
 
@@ -35,11 +35,11 @@ bool Bojovnik::zautoc(Bojovnik* bojovnik) {
     double poskodeniePoObrane = this->poskodenie - bojovnik->getBrnenie();
     bojovnik->setZivoty(bojovnik->getZivoty() - (poskodeniePoObrane));
 
-    std::cout << "\033[1;31m💔 " << this->meno << " udrel za (" << poskodeniePoObrane << ") poškodenie pre ---> " << bojovnik->getMeno() << "\033[0m" << std::endl; // Červená farba a emoji pre zlomené srdce pre poškodenie
+    std::cout << "\033[1;31m💔 " << this->meno << " udrel za (" << poskodeniePoObrane << ") poškodenie pre ---> " << bojovnik->getMeno() << "\033[0m" << std::endl;
     this->vypisStav();
 
     if (bojovnik->getMrtvy()) {
-        std::cout << "\033[1;31m☠️ " << bojovnik->getMeno() << " zomrel\033[0m" << std::endl; // Červená farba a emoji pre mŕtveho bojovníka
+        std::cout << "\033[1;31m☠️ " << bojovnik->getMeno() << " zomrel\033[0m" << std::endl;
         return true;
     }
 
