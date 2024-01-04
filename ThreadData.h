@@ -15,8 +15,7 @@ public:
     Team* getTeam1();
     Team* getTeam2();
     std::mutex& getMutex();
-    std::condition_variable& getMozeutocit();
-    std::condition_variable& getNemozeUtocit();
+
 
 
 private:
@@ -30,8 +29,6 @@ private:
     Team* team1;
     Team* team2;
     std::mutex mutex;
-    std::condition_variable mozeUtocit;
-    std::condition_variable nemozeUtocit;
 
 };
 

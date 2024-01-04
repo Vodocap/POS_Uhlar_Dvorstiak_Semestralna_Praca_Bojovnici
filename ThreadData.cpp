@@ -20,13 +20,6 @@ std::mutex& ThreadData::getMutex() {
     return this->mutex;
 }
 
-std::condition_variable& ThreadData::getMozeutocit() {
-    return this->mozeUtocit;
-}
-
-std::condition_variable& ThreadData::getNemozeUtocit() {
-    return this->nemozeUtocit;
-}
 
 bool ThreadData::isKonec() const {
     return konec;
