@@ -4,7 +4,7 @@
 
 #ifndef POS_UHLAR_DVORSTIAK_SEMESTRALNA_PRACA_BOJOVNICI_HRACKLIENT_H
 #define POS_UHLAR_DVORSTIAK_SEMESTRALNA_PRACA_BOJOVNICI_HRACKLIENT_H
-#include "Team.h"
+#include "../Server/Team.h"
 #include <iostream>
 class HracKlient {
 

@@ -3,8 +3,8 @@
 //
 
 #include "HracKlient.h"
-#include "Obchod.h"
-#include "Statistiky.h"
+#include "../Server/Obchod.h"
+#include "../Server/Statistiky.h"
 
 HracKlient::HracKlient(int peniaze) {
     this->peniaze = peniaze;
