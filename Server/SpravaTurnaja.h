@@ -9,12 +9,18 @@
 #include <vector>
 #include "HracServer.h"
 #include "SimulujBoj.h"
+#include <string>
 class SpravaTurnaja {
 
 public:
     void prevedBoje();
     void pridajHraca(HracServer* hracServer);
-    void vyhodnotTurnaj();
+    std::string vyhodnotTurnaj();
+private:
+    bool ukonceny = false;
+public:
+    bool isUkonceny() const;
+
 private:
     std::vector<HracServer*> hraci;
 };

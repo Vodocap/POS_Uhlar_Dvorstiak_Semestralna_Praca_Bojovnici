@@ -13,7 +13,7 @@ int main() {
         HracKlient hracKlient(18);
         hracKlient.vyziadajMeno();
         hracKlient.vyziadajVolby();
-        while (odpovede < 2) {
+        while (odpovede < 3) {
             char buffer[1025];
             int valread = read(socketClient->getNapojSocket(), buffer, 1024);
 

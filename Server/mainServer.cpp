@@ -176,8 +176,18 @@ int main() {
 
         }
 
-        spravaTurnaja.prevedBoje();
-        spravaTurnaja.vyhodnotTurnaj();
+        if (!spravaTurnaja.isUkonceny()) {
+            spravaTurnaja.prevedBoje();
+            spravaTurnaja.vyhodnotTurnaj();
+
+            strcpy(buffer, spravaTurnaja.vyhodnotTurnaj().c_str());
+        }
+
+        for (int j = 0; j < max_clients; ++j) {
+            sd = client_socket[j];
+            buffer[sizeof(buffer) - 1] = '\0';
+            send(sd , buffer , strlen(buffer) + 1, 0 );
+        }
 
         //else its some IO operation on some other socket
         for (i = 0; i < max_clients; i++)

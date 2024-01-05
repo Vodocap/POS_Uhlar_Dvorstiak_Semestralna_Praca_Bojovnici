@@ -25,13 +25,14 @@ void SpravaTurnaja::prevedBoje() {
 
 
     }
+    this->ukonceny = true;
 }
 
 void SpravaTurnaja::pridajHraca(HracServer* hracServer) {
     this->hraci.push_back(hracServer);
 }
 
-void SpravaTurnaja::vyhodnotTurnaj() {
+std::string SpravaTurnaja::vyhodnotTurnaj() {
     int pocitadlo = 0;
     int max = 0;
     int maxIndex = 0;
@@ -47,12 +48,30 @@ void SpravaTurnaja::vyhodnotTurnaj() {
             pocitadlo++;
         }
     }
+
+    std::string vysledok;
+
     if (pocitadlo > 1){
         std::cout<<"Hra skoncila remizou"<<std::endl;
+        vysledok += "Hra skoncila remizou\n";
     } else{
         std::cout<<"Vyhral "<<hraci[maxIndex]->getMeno()<<std::endl;
+        vysledok += ("Vyhral " + hraci[maxIndex]->getMeno() + "\n");
     }
 
+//    vysledok += "Skóre Jednotlivých hráčov:\n";
 
 
+//    for (int i = 0; i < this->hraci.size(); ++i) {
+//        vysledok += ("Meno hraca: " + this->hraci[i]->getMeno() + "\n");
+//        vysledok += ("Skore: " + std::to_string(this->hraci[i]->getSkore()) + "\n");
+//    }
+
+
+    return vysledok;
+
+}
+
+bool SpravaTurnaja::isUkonceny() const {
+    return ukonceny;
 }
