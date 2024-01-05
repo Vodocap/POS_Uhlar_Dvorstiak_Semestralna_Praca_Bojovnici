@@ -33,6 +33,8 @@ add_executable(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici_Client
         Server/Obchod.cpp
         Server/Statistiky.h
         Server/Statistiky.cpp
+        Client/SocketClient.h
+        Client/SocketClient.cpp
 )
 
 target_link_libraries(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici_Server PRIVATE Threads::Threads)
