@@ -24,6 +24,8 @@ add_executable(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici_Server
         Server/Team.h
         Server/ThreadData.cpp
         Server/ThreadData.h
+        Server/ServerSpracovanie.h
+        Server/ServerSpracovanie.cpp
 )
 add_executable(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici_Client
         Client/HracKlient.cpp

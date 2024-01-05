@@ -21,6 +21,8 @@ protected:
 private:
     static const char * endMessage;
     int napojSocket;
+public:
+    int getNapojSocket() const;
 };
 
 

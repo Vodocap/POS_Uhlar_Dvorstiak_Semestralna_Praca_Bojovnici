@@ -12,7 +12,7 @@
 
 #define SOCKET_TERMINATE_CHAR '\0'
 
-const char* SocketClient::endMessage = ":end";  // modify as needed
+const char* SocketClient::endMessage = ":end";
 
 SocketClient* SocketClient::createConnection(std::string hostName, short port) {
     struct addrinfo hints, *result = NULL;
@@ -79,6 +79,10 @@ void SocketClient::posliKoniec() {
 std::string SocketClient::serializuj(std::string &output, std::string meno, std::string volby) {
     output += meno + ";" + volby;
     return output;
+}
+
+int SocketClient::getNapojSocket() const {
+    return napojSocket;
 }
 
 #undef SOCKET_TERMINATE_CHAR
