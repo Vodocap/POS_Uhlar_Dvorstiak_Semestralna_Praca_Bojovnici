@@ -4,6 +4,7 @@
 
 #include <csignal>
 #include <cstring>
+#include <unistd.h>
 #include "HracKlient.h"
 #include "../Server/Obchod.h"
 #include "../Server/Statistiky.h"

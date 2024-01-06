@@ -12,12 +12,16 @@ class Server {
 public:
     Server(char* pAdresa, short pPort, int pPocetHracov);
     void zapniServer();
+    void posli(std::string *pVypis);
 
 private:
     char* adresa;
     short port;
     int pocetHracov;
     SpravaTurnaja* spravaTurnaja;
+    char buffer[1025];
+    int* client_socket;
+    std::string endMessage = ":end";
 };
 
 

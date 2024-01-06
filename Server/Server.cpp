@@ -28,7 +28,7 @@ void Server::zapniServer() {
     srand(time(NULL));
 
     int opt = TRUE;
-    int master_socket , addrlen , new_socket , client_socket[this->pocetHracov], activity, i , valread , sd;
+    int master_socket , addrlen , new_socket , activity, i , valread , sd;
     int max_sd;
     struct sockaddr_in address;
 
@@ -44,7 +44,7 @@ void Server::zapniServer() {
     //initialise all client_socket[] to 0 so not checked
     for (i = 0; i < this->pocetHracov; i++)
     {
-        client_socket[i] = 0;
+        this->client_socket[i] = 0;
     }
 
     //create a master socket
@@ -107,7 +107,7 @@ void Server::zapniServer() {
             //add child sockets to set
             for (i = 0; i < this->pocetHracov; i++) {
                 //socket descriptor
-                sd = client_socket[i];
+                sd = this->client_socket[i];
 
                 //if valid socket descriptor then add to read list
                 if (sd > 0)
@@ -150,12 +150,12 @@ void Server::zapniServer() {
                 //add new socket to array of sockets
                 for (i = 0; i < this->pocetHracov; i++) {
                     //if position is empty
-                    if (client_socket[i] == 0) {
-                        client_socket[i] = new_socket;
+                    if (this->client_socket[i] == 0) {
+                        this->client_socket[i] = new_socket;
                         ++clientNummes;
                         printf("Pocet pripojenych hracov: %d\n", clientNummes);
                         printf("Caka sa na tolkoto hracov %d\n", (this->pocetHracov - clientNummes) );
-                        sd = client_socket[i];
+                        sd = this->client_socket[i];
                         valread = read( sd , buffer, 1024);
                         std::string pMeno;
                         std::string pVolby;
@@ -173,6 +173,8 @@ void Server::zapniServer() {
 
         }
         std::string endMessage = ":end";
+        std::string endMessage1 = ":GENO";
+        this->posli(&endMessage1);
 
         if (!this->spravaTurnaja->isUkonceny()) {
             this->spravaTurnaja->prevedBoje();
@@ -180,8 +182,8 @@ void Server::zapniServer() {
             strcpy(buffer, this->spravaTurnaja->vyhodnotTurnaj().c_str());
             strcpy(buffer, endMessage.c_str());
             for (int j = 0; j < this->pocetHracov; ++j) {
-                if (client_socket[j] != 0) {
-                    sd = client_socket[j];
+                if (this->client_socket[j] != 0) {
+                    sd = this->client_socket[j];
                     buffer[sizeof(buffer) - 1] = '\0';
                     send(sd , buffer , strlen(buffer) + 1, 0 );
                 }
@@ -196,7 +198,7 @@ void Server::zapniServer() {
         //else its some IO operation on some other socket
         for (i = 0; i < this->pocetHracov; i++)
         {
-            sd = client_socket[i];
+            sd = this->client_socket[i];
 
 
             if (FD_ISSET( sd , &readfds))
@@ -213,7 +215,7 @@ void Server::zapniServer() {
 
                     //Close the socket and mark as 0 in list for reuse
                     close( sd );
-                    client_socket[i] = 0;
+                    this->client_socket[i] = 0;
                 }
 
             }
@@ -221,6 +223,19 @@ void Server::zapniServer() {
 
 
     }
+}
+void Server::posli(std::string *pVypis) {
+    int sd = 0;
+    for (int j = 0; j < this->pocetHracov; ++j) {
+        if (this->client_socket[j] != 0) {
+            strcpy(buffer,pVypis->c_str());
+            sd = this->client_socket[j];
+            buffer[sizeof(buffer) - 1] = '\0';
+            send(sd , buffer , strlen(buffer) + 1, 0 );
+        }
+
+    }
+
 }
 
 
