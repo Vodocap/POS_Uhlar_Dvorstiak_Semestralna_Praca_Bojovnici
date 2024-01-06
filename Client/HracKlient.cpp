@@ -2,6 +2,8 @@
 // Created by matus on 2.1.2024.
 //
 
+#include <csignal>
+#include <cstring>
 #include "HracKlient.h"
 #include "../Server/Obchod.h"
 #include "../Server/Statistiky.h"
@@ -80,4 +82,33 @@ std::string HracKlient::getVolba() {
         volba += std::to_string(this->volby[i]);
     }
     return volba;
+}
+
+void HracKlient::pripojSaNaServer(std::string adresa, short port) {
+    SocketClient* tempSocket = SocketClient::createConnection(adresa, port);
+    this->socketClient = tempSocket;
+}
+
+void HracKlient::posliUdaje() {
+    std::string output;
+    this->socketClient->serializuj(output, this->getMeno(), this->getVolba());
+    this->socketClient->posliData(output);
+}
+
+void HracKlient::citajSpravy() {
+
+    while (true) {
+        char buffer[1025];
+        int valread = read(socketClient->getNapojSocket(), buffer, 1024);
+
+        if (valread > 0) {
+            buffer[valread] = '\0';
+            std::cout << "Sprava od servera: " << buffer << std::endl;
+            if (strcmp(buffer, ":end") == 0) {
+                std::cout << "Prijata sprava ':end'. Ukoncovani cyklu." << std::endl;
+                break;
+            }
+        }
+    }
+
 }

@@ -59,13 +59,13 @@ std::string SpravaTurnaja::vyhodnotTurnaj() {
         vysledok += ("Vyhral " + hraci[maxIndex]->getMeno() + "\n");
     }
 
-//    vysledok += "Skóre Jednotlivých hráčov:\n";
+    vysledok += "Skóre Jednotlivých hráčov:\n";
 
 
-//    for (int i = 0; i < this->hraci.size(); ++i) {
-//        vysledok += ("Meno hraca: " + this->hraci[i]->getMeno() + "\n");
-//        vysledok += ("Skore: " + std::to_string(this->hraci[i]->getSkore()) + "\n");
-//    }
+    for (int i = 0; i < this->hraci.size(); ++i) {
+        vysledok += ("Meno hraca: " + this->hraci[i]->getMeno() + "\n");
+        vysledok += ("Skore: " + std::to_string(this->hraci[i]->getSkore()) + "\n");
+    }
 
 
     return vysledok;

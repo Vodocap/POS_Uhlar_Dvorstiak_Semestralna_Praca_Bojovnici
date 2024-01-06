@@ -19,6 +19,12 @@ public:
 
 private:
     std::string meno;
+    int cisloSocketu;
+public:
+    int getCisloSocketu() const;
+
+    void setCisloSocketu(int cisloSocketu);
+
 public:
     const std::string &getMeno() const;
 

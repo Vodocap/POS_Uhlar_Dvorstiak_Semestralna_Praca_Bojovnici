@@ -31,6 +31,14 @@ const std::string &HracServer::getMeno() const {
     return meno;
 }
 
+int HracServer::getCisloSocketu() const {
+    return cisloSocketu;
+}
+
+void HracServer::setCisloSocketu(int cisloSocketu) {
+    HracServer::cisloSocketu = cisloSocketu;
+}
+
 
 
 

@@ -26,6 +26,8 @@ add_executable(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici_Server
         Server/ThreadData.h
         Server/ServerSpracovanie.h
         Server/ServerSpracovanie.cpp
+        Server/Server.h
+        Server/Server.cpp
 )
 add_executable(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici_Client
         Client/HracKlient.cpp
@@ -37,6 +39,7 @@ add_executable(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici_Client
         Server/Statistiky.cpp
         Client/SocketClient.h
         Client/SocketClient.cpp
+
 )
 
 target_link_libraries(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici_Server PRIVATE Threads::Threads)
