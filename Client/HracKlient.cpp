@@ -4,6 +4,7 @@
 
 #include <csignal>
 #include <cstring>
+#include <unistd.h>
 #include "HracKlient.h"
 #include "../Server/Obchod.h"
 #include "../Server/Statistiky.h"
@@ -105,7 +106,8 @@ void HracKlient::citajSpravy() {
             buffer[valread] = '\0';
             std::cout << "Sprava od servera: " << buffer << std::endl;
             if (strcmp(buffer, ":end") == 0) {
-                std::cout << "Prijata sprava ':end'. Ukoncovani cyklu." << std::endl;
+                std::cout << "Prijata sprava ':end'. bol si odpojeny." << std::endl;
+
                 break;
             }
         }

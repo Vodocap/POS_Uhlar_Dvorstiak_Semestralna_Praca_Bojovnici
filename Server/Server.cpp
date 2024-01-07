@@ -13,7 +13,7 @@
 #include <arpa/inet.h>    //close
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <netinet/in.h>
+#import <netinet/in.h>
 #include <sys/time.h> //FD_SET, FD_ISSET, FD_ZERO macros
 #define TRUE   1
 #define FALSE  0
@@ -28,23 +28,19 @@ void Server::zapniServer() {
     srand(time(NULL));
 
     int opt = TRUE;
-    int master_socket , addrlen , new_socket , client_socket[this->pocetHracov], activity, i , valread , sd;
+    int master_socket , new_socket , activity , sd;
     int max_sd;
-    struct sockaddr_in address;
+
 
 
 
 
     char buffer[1025];  //data buffer of 1K
 
-    //set of socket descriptors
-    fd_set readfds;
-
-
     //initialise all client_socket[] to 0 so not checked
-    for (i = 0; i < this->pocetHracov; i++)
+    for (int i = 0; i < this->pocetHracov; i++)
     {
-        client_socket[i] = 0;
+        this->client_socket[i] = 0;
     }
 
     //create a master socket
@@ -66,11 +62,11 @@ void Server::zapniServer() {
     //type of socket created
 
 
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons( this->port );
+    this->address.sin_family = AF_INET;
+    this->address.sin_addr.s_addr = INADDR_ANY;
+    this->address.sin_port = htons( this->port );
 
-    if (bind(master_socket, (struct sockaddr *)&address, sizeof(address))<0)
+    if (bind(master_socket, (struct sockaddr *)&this->address, sizeof(this->address))<0)
     {
         perror("bind failed");
         exit(EXIT_FAILURE);
@@ -87,7 +83,7 @@ void Server::zapniServer() {
     }
 
     //accept the incoming connection
-    addrlen = sizeof(address);
+    this->addrlen = sizeof(this->address);
     std::string putsString = ("caka sa na " + std::to_string(this->pocetHracov) + " hracov");
     const char* putsChar = putsString.c_str();
     puts(putsChar);
@@ -98,20 +94,20 @@ void Server::zapniServer() {
     while (TRUE) {
         while(clientNummes < 2) {
             //clear the socket set
-            FD_ZERO(&readfds);
+            FD_ZERO(&this->readfds);
 
             //add master socket to set
-            FD_SET(master_socket, &readfds);
+            FD_SET(master_socket, &this->readfds);
             max_sd = master_socket;
 
             //add child sockets to set
-            for (i = 0; i < this->pocetHracov; i++) {
+            for (int i = 0; i < this->pocetHracov; i++) {
                 //socket descriptor
-                sd = client_socket[i];
+                sd = this->client_socket[i];
 
                 //if valid socket descriptor then add to read list
                 if (sd > 0)
-                    FD_SET(sd, &readfds);
+                    FD_SET(sd, &this->readfds);
 
                 //highest file descriptor number, need it for the select function
                 if (sd > max_sd)
@@ -120,7 +116,7 @@ void Server::zapniServer() {
 
             //wait for an activity on one of the sockets , timeout is NULL ,
             //so wait indefinitely
-            activity = select(max_sd + 1, &readfds, NULL, NULL, NULL);
+            activity = select(max_sd + 1, &this->readfds, NULL, NULL, NULL);
 
             if ((activity < 0) && (errno != EINTR)) {
                 printf("select error");
@@ -129,14 +125,14 @@ void Server::zapniServer() {
             //If something happened on the master socket ,
             //then its an incoming connection
 
-            if (FD_ISSET(master_socket, &readfds)) {
-                if ((new_socket = accept(master_socket, (struct sockaddr *) &address, (socklen_t *) &addrlen)) < 0) {
+            if (FD_ISSET(master_socket, &this->readfds)) {
+                if ((new_socket = accept(master_socket, (struct sockaddr *) &this->address, (socklen_t *) &this->addrlen)) < 0) {
                     exit(EXIT_FAILURE);
                 }
 
                 // inform user of socket number - used in send and receive commands
                 printf("Hrac pripojeny , socket fd is %d , ip is : %s , port : %d \n ",
-                       new_socket, inet_ntoa(address.sin_addr), ntohs(address.sin_port));
+                       new_socket, inet_ntoa(this->address.sin_addr), ntohs(this->address.sin_port));
 
                 // Send a welcome message to the newly connected client
 
@@ -148,14 +144,14 @@ void Server::zapniServer() {
                 puts("Hrac bol uspesne privitany");
 
                 //add new socket to array of sockets
-                for (i = 0; i < this->pocetHracov; i++) {
+                for (int i = 0; i < this->pocetHracov; i++) {
                     //if position is empty
-                    if (client_socket[i] == 0) {
-                        client_socket[i] = new_socket;
+                    if (this->client_socket[i] == 0) {
+                        this->client_socket[i] = new_socket;
                         ++clientNummes;
                         printf("Pocet pripojenych hracov: %d\n", clientNummes);
                         printf("Caka sa na tolkoto hracov %d\n", (this->pocetHracov - clientNummes) );
-                        sd = client_socket[i];
+                        sd = this->client_socket[i];
                         valread = read( sd , buffer, 1024);
                         std::string pMeno;
                         std::string pVolby;
@@ -163,7 +159,11 @@ void Server::zapniServer() {
                         serverSpracovanie.deserializuj(buffer, pMeno, pVolby);
                         this->spravaTurnaja->pridajHraca(new HracServer(pVolby, pMeno));
                         buffer[valread] = '\0';
-                        send(sd , buffer , strlen(buffer) + 1, 0 );
+
+                        if (this->client_socket[i] != 0) {
+                            send(sd , buffer , strlen(buffer) + 1, 0 );
+                        }
+
 
                         break;
                     }
@@ -173,15 +173,19 @@ void Server::zapniServer() {
 
         }
         std::string endMessage = ":end";
+        std::string endMessage1 = ":GENO";
+        this->posli(&endMessage1);
 
         if (!this->spravaTurnaja->isUkonceny()) {
             this->spravaTurnaja->prevedBoje();
             this->spravaTurnaja->vyhodnotTurnaj();
             strcpy(buffer, this->spravaTurnaja->vyhodnotTurnaj().c_str());
             strcpy(buffer, endMessage.c_str());
+            this->skontrolujOdpojenie();
             for (int j = 0; j < this->pocetHracov; ++j) {
-                if (client_socket[j] != 0) {
-                    sd = client_socket[j];
+                std::cout << this->client_socket[j] << std::endl;
+                if (this->client_socket[j] != 0) {
+                    sd = this->client_socket[j];
                     buffer[sizeof(buffer) - 1] = '\0';
                     send(sd , buffer , strlen(buffer) + 1, 0 );
                 }
@@ -193,33 +197,50 @@ void Server::zapniServer() {
 
 
 
-        //else its some IO operation on some other socket
-        for (i = 0; i < this->pocetHracov; i++)
-        {
-            sd = client_socket[i];
 
 
-            if (FD_ISSET( sd , &readfds))
-            {
-                //Check if it was for closing , and also read the
-                //incoming message
-                if ((valread = read( sd , buffer, 1024)) == 0)
-                {
-                    //Somebody disconnected , get his details and print
-                    getpeername(sd , (struct sockaddr*)&address , \
-                        (socklen_t*)&addrlen);
-                    printf("Hrac odpojeny , ip %s , port %d \n" ,
-                           inet_ntoa(address.sin_addr) , ntohs(address.sin_port));
 
-                    //Close the socket and mark as 0 in list for reuse
-                    close( sd );
-                    client_socket[i] = 0;
-                }
 
-            }
+    }
+}
+void Server::posli(std::string *pVypis) {
+    int sd = 0;
+    for (int j = 0; j < this->pocetHracov; ++j) {
+        if (this->client_socket[j] != 0) {
+            strcpy(buffer,pVypis->c_str());
+            sd = this->client_socket[j];
+            buffer[sizeof(buffer) - 1] = '\0';
+            send(sd , buffer , strlen(buffer) + 1, 0 );
         }
 
+    }
 
+}
+
+void Server::skontrolujOdpojenie() {
+    for (int i = 0; i < this->pocetHracov; i++)
+    {
+        int sd = this->client_socket[i];
+
+
+        if (FD_ISSET( sd , &readfds))
+        {
+            //Check if it was for closing , and also read the
+            //incoming message
+            if ((valread = read( sd , buffer, 1024)) == 0)
+            {
+                //Somebody disconnected , get his details and print
+                getpeername(sd , (struct sockaddr*)&address , \
+                        (socklen_t*)&this->addrlen);
+                printf("Hrac odpojeny , ip %s , port %d \n" ,
+                       inet_ntoa(address.sin_addr) , ntohs(address.sin_port));
+
+                //Close the socket and mark as 0 in list for reuse
+                close( sd );
+                this->client_socket[i] = 0;
+            }
+
+        }
     }
 }
 
