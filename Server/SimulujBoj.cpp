@@ -55,7 +55,8 @@ void SimulujBoj::utocPrvy(void *sharedData) {
 
     while (threadData->getTeam1()->getVelkostTeamu() != 0 || !threadData->isKonec()) {
         threadData->getOddychuje().notify_all();
-        std::this_thread::sleep_for(std::chrono::duration<double>(threadData->getTeam1()->dajBojovnikaNaBoj()->getRychlostUtoku()));
+        std::this_thread::sleep_for(
+                std::chrono::duration<double>(threadData->getTeam1()->dajBojovnikaNaBoj()->getRychlostUtoku()));
         threadData->getUtoci().notify_all();
         std::unique_lock<std::mutex> lock(threadData->getMutex());
         threadData->getTeam1()->vymazMrtvychBojovnikov();
@@ -65,7 +66,6 @@ void SimulujBoj::utocPrvy(void *sharedData) {
         }
 
         threadData->getTeam1()->dajBojovnikaNaBoj()->zautoc(threadData->getTeam2()->dajBojovnikaNaBoj());
-
         lock.unlock();
         if (!threadData->getTeam1()->dajBojovnikaNaBoj()->getMrtvy()){
             std::cout << "------------------------" << std::endl;
@@ -96,7 +96,6 @@ void SimulujBoj::utocDruhy(void *sharedData) {
         }
 
         threadData->getTeam2()->dajBojovnikaNaBoj()->zautoc(threadData->getTeam1()->dajBojovnikaNaBoj());
-
         lock.unlock();
         if (!threadData->getTeam2()->dajBojovnikaNaBoj()->getMrtvy()) {
             std::cout << "------------------------" << std::endl;
@@ -121,11 +120,21 @@ void SimulujBoj::generujEfekty(void* sharedData) {
         std::cout << "Caka sa 5 sekund kym sa vygeneruje efekt " << std::endl;
         sleep(5);
         std::unique_lock<std::mutex> lock(threadData->getMutex());
+        if (threadData->isKonec()) {
+            break;
+        }
         while (!threadData->getEfekty()->tryGeneryjPushEfekt(threadData->getTeam1()->dajNahodneCisloZIntervalu(0,3))) {
             std::cout << "Caka sa kym budu efekty prazdne " << std::endl;
             threadData->getPrazdneEfekty().wait(lock);
+            if (threadData->isKonec()) {
+                break;
+            }
         }
+        threadData->getPlneEfekty().notify_all();
         lock.unlock();
+        if (threadData->isKonec()) {
+            break;
+        }
         threadData->getPlneEfekty().notify_all();
 
 
@@ -141,22 +150,25 @@ void SimulujBoj::aplikujEfekty(void* sharedData) {
         int efekt = 0;
         std::unique_lock<std::mutex> lock(threadData->getMutex());
         while (!threadData->getEfekty()->tryOdoberEfekt(&efekt)) {
+            std::cout<<("CIGAAN")<<std::endl;
             threadData->getPlneEfekty().wait(lock);
         }
-        lock.unlock();
-        threadData->getPrazdneEfekty().notify_all();
 
+        threadData->getPrazdneEfekty().notify_all();
+        lock.unlock();
 
         if (threadData->isKonec()) {
             break;
         }
         lock.lock();
+        std::cout<<("CIGAAN2222")<<std::endl;
         threadData->getOddychuje().wait(lock);
         if (threadData->getTeam1()->dajNahodneCisloZIntervalu(0.0, 1.0) > 0.5) {
             threadData->getEfekty()->tryAplikujEfekt(threadData->getTeam1()->dajBojovnikaNaBoj(), efekt);
         } else {
             threadData->getEfekty()->tryAplikujEfekt(threadData->getTeam2()->dajBojovnikaNaBoj(), efekt);
         }
+        threadData->getPrazdneEfekty().notify_all();
         lock.unlock();
 
 

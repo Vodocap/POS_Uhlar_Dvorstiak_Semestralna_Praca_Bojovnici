@@ -17,13 +17,15 @@ Bojovnik::Bojovnik(double pZivoty, double pPoskodenie, double pBrnenie, double p
 
 }
 
-bool Bojovnik::zautoc(Bojovnik* bojovnik) {
+bool Bojovnik::zautoc(void* data) {
+    if (data == nullptr){
+        return false;
+    }
+    Bojovnik* bojovnik = (Bojovnik*) data;
     if (this->mrtvy) {
         //std::cout << "\033[1;31m☠️ Mŕtvi neutočia...\033[0m" << std::endl;
         return false;
     }
-
-
 
     double nahodneCislo = static_cast<double>(std::rand()) / RAND_MAX;
 
@@ -33,6 +35,9 @@ bool Bojovnik::zautoc(Bojovnik* bojovnik) {
     }
 
     double poskodeniePoObrane = this->poskodenie - bojovnik->getBrnenie();
+    if(poskodeniePoObrane < 0){
+        poskodeniePoObrane = 0;
+    }
     bojovnik->setZivoty(bojovnik->getZivoty() - (poskodeniePoObrane));
 
     std::cout << "\033[1;31m💔 " << this->meno << " udrel za (" << poskodeniePoObrane << ") poškodenie pre ---> " << bojovnik->getMeno() << "\033[0m" << std::endl;
@@ -48,6 +53,9 @@ bool Bojovnik::zautoc(Bojovnik* bojovnik) {
 }
 
 void Bojovnik::setZivoty(double hodnota) {
+    if (hodnota < 0 ){
+        hodnota = 0;
+    }
     this->zivoty = hodnota;
     if (this->zivoty <= 0) {
         this->mrtvy = true;

@@ -74,6 +74,9 @@ const std::string &Team::getMeno() const {
 }
 
 Bojovnik *Team::dajBojovnikaNaBoj() {
+    if (this->teamBojovnikov.size() == 0){
+        return nullptr;
+    }
     return this->teamBojovnikov.at(0);
 }
 

@@ -12,7 +12,7 @@ class Bojovnik {
 public:
     Bojovnik(double pZivoty, double pPoskodenie, double pBrnenie, double pUnik,double pRychlostUtoku,std::string pMeno);
     void vypisStav();
-    bool zautoc(Bojovnik* bojovnik);
+    bool zautoc(void* data);
     void setZivoty(double hodnota);
     double getZivoty();
     void setPoskodenie(double hodnota);
