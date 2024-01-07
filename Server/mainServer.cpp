@@ -9,11 +9,11 @@
 
 int main() {
 
-
+    srand(time(NULL));
     //Server server("frios2.fri.uniza.sk", 12385, 2);
     Server server("frios2.fri.uniza.sk", 12385, 2);
     server.zapniServer();
-    srand(time(NULL));
+
 
 
 

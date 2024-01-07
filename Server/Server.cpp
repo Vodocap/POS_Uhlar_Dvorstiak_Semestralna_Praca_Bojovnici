@@ -184,7 +184,6 @@ void Server::zapniServer() {
 
         }
         std::string endMessage = "Hra sa skoncila ";
-        this->posli(&endMessage);
 
         if (!this->spravaTurnaja->isUkonceny()) {
             this->spravaTurnaja->prevedBoje();

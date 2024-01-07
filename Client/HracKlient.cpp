@@ -117,7 +117,7 @@ void HracKlient::citajSpravy() {
                 this->posliUdaje();
             }
 
-            if (strcmp(buffer, "Hra sa skoncila") == 0) {
+            if (strcmp(buffer, "Hra sa skoncila ") == 0) {
                 std::cout << "bol si odpojeny. " << std::endl;
 
                 break;

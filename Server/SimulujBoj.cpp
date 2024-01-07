@@ -116,7 +116,9 @@ void SimulujBoj::utocDruhy(void *sharedData) {
 void SimulujBoj::generujEfekty(void* sharedData) {
     ThreadData* threadData = (ThreadData*) sharedData;
     while (!threadData->isKonec()) {
-
+        if (threadData->isKonec()) {
+            break;
+        }
         std::cout << "Caka sa 5 sekund kym sa vygeneruje efekt " << std::endl;
         sleep(5);
         std::unique_lock<std::mutex> lock(threadData->getMutex());
@@ -128,9 +130,7 @@ void SimulujBoj::generujEfekty(void* sharedData) {
         threadData->getPlneEfekty().notify_all();
 
 
-        if (threadData->isKonec()) {
-            break;
-        }
+
 
     }
 }
