@@ -13,9 +13,11 @@ HracKlient::HracKlient(int peniaze) {
     this->peniaze = peniaze;
 }
 
-void HracKlient::vypisStav() {
-    std::cout << "HracKlient " << this->meno << "ma tolkoto penazi: " <<std::endl;
-
+HracKlient::~HracKlient() {
+    if (socketClient) {
+        delete socketClient;
+        socketClient = nullptr;
+    }
 }
 
 int HracKlient::getPeniaze() const {
@@ -112,7 +114,7 @@ void HracKlient::citajSpravy() {
             buffer[valread] = '\0';
             std::cout << "Sprava od servera: " << buffer << std::endl;
 
-            if (strcmp(buffer, "Hra skoncila, pokracuje dalsie kolo") == 0) {
+            if (strcmp(buffer, "Hra skoncila, pokracuje este dalsie kolo") == 0) {
                 this->vyziadajVolby();
                 this->posliUdaje();
             }

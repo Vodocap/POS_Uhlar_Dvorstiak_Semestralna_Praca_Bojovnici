@@ -11,7 +11,7 @@ class HracKlient {
 
 public:
     HracKlient(int peniaze);
-    void vypisStav();
+    ~HracKlient();
     int getPeniaze() const;
     void setPeniaze(int peniaze);
     void vyziadajMeno();

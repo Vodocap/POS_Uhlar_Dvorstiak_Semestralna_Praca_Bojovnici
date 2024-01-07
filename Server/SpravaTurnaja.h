@@ -13,7 +13,7 @@
 class SpravaTurnaja {
 
 public:
-    void prevedBoje();
+    void prevedBoje(std::function<void(const std::string&)> pFunkcia, std::string mess);
     void pridajHraca(HracServer* hracServer);
     std::string vyhodnotTurnaj();
 private:
@@ -23,6 +23,7 @@ public:
 
 private:
     std::vector<HracServer*> hraci;
+    static std::function<void(const std::string&)> funkcia;
 };
 
 

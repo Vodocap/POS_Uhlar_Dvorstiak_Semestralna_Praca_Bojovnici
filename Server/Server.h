@@ -13,7 +13,7 @@ class Server {
 public:
     Server(char* pAdresa, short pPort, int pPocetHracov);
     void zapniServer();
-    void posli(std::string *pVypis);
+    void posli(const std::string *pVypis);
     void skontrolujOdpojenie();
 
 private:

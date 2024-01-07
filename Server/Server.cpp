@@ -178,13 +178,19 @@ void Server::zapniServer() {
 
         }
         std::string endMessage = "Hra sa skoncila ";
+        std::string janko;
 
         if (!this->spravaTurnaja->isUkonceny()) {
-            this->spravaTurnaja->prevedBoje();
+            std::function<void(const std::string&)> mojaFunkcia = [this](const std::string& sprava) {
+                this->posli(&sprava);
+            };
+
+
+            this->spravaTurnaja->prevedBoje(mojaFunkcia, janko);
             std::string vyhodnotenie = this->spravaTurnaja->vyhodnotTurnaj();
-            this->skontrolujOdpojenie();
             this->posli(&vyhodnotenie);
             this->posli(&endMessage);
+            this->skontrolujOdpojenie();
             break;
 
         }
@@ -198,7 +204,7 @@ void Server::zapniServer() {
 
     }
 }
-void Server::posli(std::string *pVypis) {
+void Server::posli(const std::string *pVypis) {
     int sd;
     for (int j = 0; j < this->pocetHracov; ++j) {
         if (this->client_socket[j] != 0) {

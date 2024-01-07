@@ -21,7 +21,7 @@ std::mutex& ThreadData::getMutex() {
 }
 
 
-bool ThreadData::isKonec() const {
+bool ThreadData::isKonec() {
     return konec;
 }
 
@@ -47,6 +47,14 @@ std::condition_variable &ThreadData::getPrazdneEfekty()  {
 
 std::condition_variable &ThreadData::getPlneEfekty()  {
     return plneEfekty;
+}
+
+int ThreadData::getOddychujuci() {
+    return oddychujuci;
+}
+
+void ThreadData::setOddychujuci(int oddychujuci) {
+    ThreadData::oddychujuci = oddychujuci;
 }
 
 

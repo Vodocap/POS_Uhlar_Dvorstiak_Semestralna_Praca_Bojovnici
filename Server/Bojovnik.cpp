@@ -17,7 +17,7 @@ Bojovnik::Bojovnik(double pZivoty, double pPoskodenie, double pBrnenie, double p
 
 }
 
-bool Bojovnik::zautoc(void* data) {
+bool Bojovnik::zautoc(void* data, std::string& doSpravy) {
     if (data == nullptr){
         return false;
     }
@@ -30,6 +30,7 @@ bool Bojovnik::zautoc(void* data) {
     double nahodneCislo = static_cast<double>(std::rand()) / RAND_MAX;
 
     if (nahodneCislo < bojovnik->getUnik()) {
+        doSpravy = "\033[1;32m🤺 " + bojovnik->getMeno() + " sa vyhol útoku\033[0m" + " \n";
         std::cout << "\033[1;32m🤺 " << bojovnik->getMeno() << " sa vyhol útoku\033[0m" << std::endl;
         return true;
     }
@@ -40,16 +41,18 @@ bool Bojovnik::zautoc(void* data) {
     }
     bojovnik->setZivoty(bojovnik->getZivoty() - (poskodeniePoObrane));
 
+    doSpravy = "\033[1;31m💔 " + this->meno + " udrel za (" + std::to_string(poskodeniePoObrane) + ") poškodenie pre ---> " + bojovnik->getMeno() + "\033[0m" + "\n" ;
     std::cout << "\033[1;31m💔 " << this->meno << " udrel za (" << poskodeniePoObrane << ") poškodenie pre ---> " << bojovnik->getMeno() << "\033[0m" << std::endl;
     this->vypisStav();
 
     if (bojovnik->getMrtvy()) {
+        doSpravy = "\033[1;31m☠️ " + bojovnik->getMeno() + " zomrel\033[0m" + " \n";
         std::cout << "\033[1;31m☠️ " << bojovnik->getMeno() << " zomrel\033[0m" << std::endl;
         return true;
     }
 
     bojovnik->vypisStav();
-    return false;
+    return true;
 }
 
 void Bojovnik::setZivoty(double hodnota) {

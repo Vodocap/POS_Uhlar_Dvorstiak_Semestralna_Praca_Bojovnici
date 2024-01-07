@@ -22,7 +22,7 @@ public:
 private:
     bool konec;
 public:
-    bool isKonec() const;
+    bool isKonec();
 
     void setKonec(bool konec);
 
@@ -32,6 +32,13 @@ private:
     Efekty* efekty;
 public:
     Efekty *getEfekty() const;
+
+private:
+    int oddychujuci = 0;
+public:
+    int getOddychujuci() ;
+
+    void setOddychujuci(int oddychujuci);
 
 private:
     std::mutex mutex;
