@@ -42,6 +42,12 @@ void HracKlient::vyziadajVolby() {
 
     int i = 0;
 
+    for (int j = 0; j < this->volby.size(); ++j) {
+        if (this->volby.size() > 0) {
+            this->volby.pop_back();
+        }
+    }
+
     while (i < 6) {
         obchod.ukazObchod(i);
         do {
@@ -105,8 +111,14 @@ void HracKlient::citajSpravy() {
         if (valread > 0) {
             buffer[valread] = '\0';
             std::cout << "Sprava od servera: " << buffer << std::endl;
-            if (strcmp(buffer, ":end") == 0) {
-                std::cout << "Prijata sprava ':end'. bol si odpojeny." << std::endl;
+
+            if (strcmp(buffer, "Hra skoncila, pokracuje dalsie kolo") == 0) {
+                this->vyziadajVolby();
+                this->posliUdaje();
+            }
+
+            if (strcmp(buffer, "Hra sa skoncila") == 0) {
+                std::cout << "bol si odpojeny. " << std::endl;
 
                 break;
             }

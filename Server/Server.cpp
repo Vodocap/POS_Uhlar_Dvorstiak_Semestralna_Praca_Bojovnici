@@ -136,12 +136,13 @@ void Server::zapniServer() {
 
                 // Send a welcome message to the newly connected client
 
-                std::string messageString = ("caka sa na " + std::to_string(this->pocetHracov) + " hracov");
+
+                std::string messageString = ("caka sa na " + std::to_string(this->pocetHracov) + " hracov kym sa zacne cela hra ");
                 strcpy(buffer, messageString.c_str());
                 send(new_socket, buffer, strlen(buffer), 0);
 
 
-                puts("Hrac bol uspesne privitany");
+                puts("Hrac bol uspesne privitany: ");
 
                 //add new socket to array of sockets
                 for (int i = 0; i < this->pocetHracov; i++) {
@@ -150,15 +151,25 @@ void Server::zapniServer() {
                         this->client_socket[i] = new_socket;
                         ++clientNummes;
                         printf("Pocet pripojenych hracov: %d\n", clientNummes);
-                        printf("Caka sa na tolkoto hracov %d\n", (this->pocetHracov - clientNummes) );
+                        std::string sprava = " , treba este tolkoto hracov " + std::to_string(this->pocetHracov - clientNummes) + "\n";
+                        this->posli(&sprava);
+
+                        if ((this->pocetHracov - clientNummes) == 0) {
+                            printf("Je pripojeny dostatocny pocet hracov ");
+                        } else {
+                            printf("Caka sa na tolkoto hracov %d\n", (this->pocetHracov - clientNummes) );
+                        }
+
+
+
                         sd = this->client_socket[i];
-                        valread = read( sd , buffer, 1024);
+                        this->valread = read( sd , buffer, 1024);
                         std::string pMeno;
                         std::string pVolby;
                         ServerSpracovanie serverSpracovanie;
                         serverSpracovanie.deserializuj(buffer, pMeno, pVolby);
                         this->spravaTurnaja->pridajHraca(new HracServer(pVolby, pMeno));
-                        buffer[valread] = '\0';
+                        buffer[this->valread] = '\0';
 
                         if (this->client_socket[i] != 0) {
                             send(sd , buffer , strlen(buffer) + 1, 0 );
@@ -172,25 +183,16 @@ void Server::zapniServer() {
 
 
         }
-        std::string endMessage = ":end";
-        std::string endMessage1 = ":GENO";
-        this->posli(&endMessage1);
+        std::string endMessage = "Hra sa skoncila ";
+        this->posli(&endMessage);
 
         if (!this->spravaTurnaja->isUkonceny()) {
             this->spravaTurnaja->prevedBoje();
-            this->spravaTurnaja->vyhodnotTurnaj();
-            strcpy(buffer, this->spravaTurnaja->vyhodnotTurnaj().c_str());
-            strcpy(buffer, endMessage.c_str());
+            std::string vyhodnotenie = this->spravaTurnaja->vyhodnotTurnaj();
             this->skontrolujOdpojenie();
-            for (int j = 0; j < this->pocetHracov; ++j) {
-                std::cout << this->client_socket[j] << std::endl;
-                if (this->client_socket[j] != 0) {
-                    sd = this->client_socket[j];
-                    buffer[sizeof(buffer) - 1] = '\0';
-                    send(sd , buffer , strlen(buffer) + 1, 0 );
-                }
+            this->posli(&vyhodnotenie);
+            this->posli(&endMessage);
 
-            }
 
         }
 
@@ -204,13 +206,13 @@ void Server::zapniServer() {
     }
 }
 void Server::posli(std::string *pVypis) {
-    int sd = 0;
+    int sd;
     for (int j = 0; j < this->pocetHracov; ++j) {
         if (this->client_socket[j] != 0) {
-            strcpy(buffer,pVypis->c_str());
+            strcpy(this->buffer,pVypis->c_str());
             sd = this->client_socket[j];
-            buffer[sizeof(buffer) - 1] = '\0';
-            send(sd , buffer , strlen(buffer) + 1, 0 );
+            this->buffer[sizeof(this->buffer) - 1] = '\0';
+            send(sd , this->buffer , strlen(this->buffer) + 1, 0 );
         }
 
     }

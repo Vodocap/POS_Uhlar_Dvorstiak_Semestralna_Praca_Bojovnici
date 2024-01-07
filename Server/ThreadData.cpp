@@ -4,7 +4,7 @@
 
 #include "ThreadData.h"
 
-ThreadData::ThreadData(Team *pTeam1, Team *pTeam2) : team1(pTeam1), team2(pTeam2), konec(false) {
+ThreadData::ThreadData(Team *pTeam1, Team *pTeam2, Efekty* pEfekty) : team1(pTeam1), team2(pTeam2), konec(false), efekty(pEfekty) {
 
 }
 
@@ -28,3 +28,27 @@ bool ThreadData::isKonec() const {
 void ThreadData::setKonec(bool konec) {
     ThreadData::konec = konec;
 }
+
+std::condition_variable& ThreadData::getUtoci()  {
+    return utoci;
+}
+
+std::condition_variable& ThreadData::getOddychuje()  {
+    return oddychuje;
+}
+
+Efekty *ThreadData::getEfekty() const {
+    return efekty;
+}
+
+std::condition_variable &ThreadData::getPrazdneEfekty()  {
+    return prazdneEfekty;
+}
+
+std::condition_variable &ThreadData::getPlneEfekty()  {
+    return plneEfekty;
+}
+
+
+
+

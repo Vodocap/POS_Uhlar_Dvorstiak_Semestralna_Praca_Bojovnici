@@ -12,7 +12,7 @@ void SpravaTurnaja::prevedBoje() {
             std::cout<<i<<std::endl;
             std::cout<<j<<std::endl;
             if (i != j){
-                boj.simulujBoj(new ThreadData(this->hraci[i]->dajTeam(), this->hraci[j]->dajTeam()));
+                boj.simulujBoj(new ThreadData(this->hraci[i]->dajTeam(), this->hraci[j]->dajTeam(), new Efekty(2)));
                 this->hraci[i]->dajTeam()->prirpavTeamNaDalsiBoj();
                 this->hraci[j]->dajTeam()->prirpavTeamNaDalsiBoj();
                 if (boj.getVitaz() == this->hraci[i]->getMeno()){

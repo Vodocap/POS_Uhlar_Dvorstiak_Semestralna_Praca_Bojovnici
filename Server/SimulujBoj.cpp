@@ -2,6 +2,8 @@
 // Created by matus on 2.1.2024.
 //
 
+#include <random>
+#include <csignal>
 #include "SimulujBoj.h"
 #include "Team.h"
 
@@ -15,6 +17,10 @@ void SimulujBoj::simulujBoj(void* sharedData) {
 
         std::thread thUtoc1(utocPrvy, std::ref(threadData));
         std::thread thUtoc2(utocDruhy, std::ref(threadData));
+        std::thread thEfektyGen(generujEfekty, std::ref(threadData));
+        std::thread thEfektyApl(aplikujEfekty, std::ref(threadData));
+        thEfektyGen.join();
+        thEfektyApl.join();
         thUtoc1.join();
         thUtoc2.join();
         this->vyhodnotVitaza(prvyTeam, druhyTeam);
@@ -47,7 +53,9 @@ void SimulujBoj::utocPrvy(void *sharedData) {
     std::cout << "------------------------" << std::endl;
 
     while (threadData->getTeam1()->getVelkostTeamu() != 0 || !threadData->isKonec()) {
+        threadData->getOddychuje().notify_all();
         std::this_thread::sleep_for(std::chrono::duration<double>(threadData->getTeam1()->dajBojovnikaNaBoj()->getRychlostUtoku()));
+        threadData->getUtoci().notify_all();
         std::unique_lock<std::mutex> lock(threadData->getMutex());
         threadData->getTeam1()->vymazMrtvychBojovnikov();
         if (threadData->getTeam1()->getVelkostTeamu() == 0 || threadData->getTeam2()->getVelkostTeamu() == 0) {
@@ -76,8 +84,9 @@ void SimulujBoj::utocPrvy(void *sharedData) {
 void SimulujBoj::utocDruhy(void *sharedData) {
     ThreadData* threadData = (ThreadData*) sharedData;
     while (threadData->getTeam2()->getVelkostTeamu() != 0 || !threadData->isKonec()) {
+        threadData->getOddychuje().notify_all();
         std::this_thread::sleep_for(std::chrono::duration<double>(threadData->getTeam2()->dajBojovnikaNaBoj()->getRychlostUtoku()));
-        //std::this_thread::sleep_for(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::duration<double>(threadData->getTeam2()->dajBojovnikaNaBoj()->getRychlostUtoku())));
+        threadData->getUtoci().notify_all();
         std::unique_lock<std::mutex> lock(threadData->getMutex());
         threadData->getTeam2()->vymazMrtvychBojovnikov();
         if (threadData->getTeam1()->getVelkostTeamu() == 0 || threadData->getTeam2()->getVelkostTeamu() == 0) {
@@ -103,4 +112,54 @@ void SimulujBoj::utocDruhy(void *sharedData) {
 
 }
 
-//TODO spravit LEPSI VYPIS!
+void SimulujBoj::generujEfekty(void* sharedData) {
+    ThreadData* threadData = (ThreadData*) sharedData;
+    while (!threadData->isKonec()) {
+
+        std::cout << "Caka sa 5 sekund kym sa vygeneruje efekt " << std::endl;
+        sleep(5);
+        std::unique_lock<std::mutex> lock(threadData->getMutex());
+        while (!threadData->getEfekty()->tryGeneryjPushEfekt(threadData->getTeam1()->dajNahodneCisloZIntervalu(0,3))) {
+            std::cout << "Caka sa kym budu efekty prazdne " << std::endl;
+            threadData->getPrazdneEfekty().wait(lock);
+        }
+        lock.unlock();
+        threadData->getPlneEfekty().notify_all();
+
+
+        if (threadData->isKonec()) {
+            break;
+        }
+
+    }
+}
+
+void SimulujBoj::aplikujEfekty(void* sharedData) {
+    ThreadData* threadData = (ThreadData*) sharedData;
+    while (!threadData->isKonec()) {
+
+        int efekt = 0;
+        std::unique_lock<std::mutex> lock(threadData->getMutex());
+        while (!threadData->getEfekty()->tryOdoberEfekt(&efekt)) {
+            threadData->getPlneEfekty().wait(lock);
+        }
+        lock.unlock();
+        threadData->getPrazdneEfekty().notify_all();
+
+
+        if (threadData->isKonec()) {
+            break;
+        }
+        lock.lock();
+        threadData->getOddychuje().wait(lock);
+        if (threadData->getTeam1()->dajNahodneCisloZIntervalu(0.0, 1.0) > 0.5) {
+            threadData->getEfekty()->tryAplikujEfekt(threadData->getTeam1()->dajBojovnikaNaBoj(), efekt);
+        } else {
+            threadData->getEfekty()->tryAplikujEfekt(threadData->getTeam2()->dajBojovnikaNaBoj(), efekt);
+        }
+        lock.unlock();
+
+
+
+    }
+}

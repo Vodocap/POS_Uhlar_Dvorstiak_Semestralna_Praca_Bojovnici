@@ -14,6 +14,9 @@ public:
     void simulujBoj(void* sharedData);
     static void utocPrvy(void* sharedData);
     static void utocDruhy(void* sharedData);
+    static void generujEfekty(void* sharedData);
+    static void aplikujEfekty(void* sharedData);
+
 
 
 private:

@@ -28,6 +28,8 @@ add_executable(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici_Server
         Server/ServerSpracovanie.cpp
         Server/Server.h
         Server/Server.cpp
+        Server/Efekty.h
+        Server/Efekty.cpp
 )
 add_executable(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici_Client
         Client/HracKlient.cpp

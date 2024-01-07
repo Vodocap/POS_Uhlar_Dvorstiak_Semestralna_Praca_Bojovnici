@@ -7,7 +7,7 @@
 
 int main() {
 
-        HracKlient hracKlient(18);
+        HracKlient hracKlient(36);
         hracKlient.pripojSaNaServer("127.0.0.1", 8080);
         hracKlient.vyziadajMeno();
         hracKlient.vyziadajVolby();
