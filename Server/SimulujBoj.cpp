@@ -4,6 +4,7 @@
 
 #include <random>
 #include <csignal>
+#include <unistd.h>
 #include "SimulujBoj.h"
 #include "Team.h"
 

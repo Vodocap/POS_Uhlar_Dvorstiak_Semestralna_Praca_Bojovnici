@@ -11,7 +11,7 @@ int main() {
 
 
     //Server server("frios2.fri.uniza.sk", 12385, 2);
-    Server server("127.0.0.1", 8080, 2);
+    Server server("frios2.fri.uniza.sk", 12385, 2);
     server.zapniServer();
     srand(time(NULL));
 

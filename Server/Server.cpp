@@ -20,7 +20,7 @@
 
 Server::Server(char* pAdresa, short pPort, int pPocetHracov) : adresa(pAdresa), port(pPort), pocetHracov(pPocetHracov) {
     this->spravaTurnaja = new SpravaTurnaja;
-
+    this->client_socket = new int[pPocetHracov];
 }
 
 
@@ -35,7 +35,7 @@ void Server::zapniServer() {
 
 
 
-    char buffer[1025];  //data buffer of 1K
+      //data buffer of 1K
 
     //initialise all client_socket[] to 0 so not checked
     for (int i = 0; i < this->pocetHracov; i++)
@@ -138,8 +138,8 @@ void Server::zapniServer() {
 
 
                 std::string messageString = ("caka sa na " + std::to_string(this->pocetHracov) + " hracov kym sa zacne cela hra ");
-                strcpy(buffer, messageString.c_str());
-                send(new_socket, buffer, strlen(buffer), 0);
+                strcpy(this->buffer, messageString.c_str());
+                send(new_socket, this->buffer, strlen(this->buffer), 0);
 
 
                 puts("Hrac bol uspesne privitany: ");
@@ -163,16 +163,16 @@ void Server::zapniServer() {
 
 
                         sd = this->client_socket[i];
-                        this->valread = read( sd , buffer, 1024);
+                        this->valread = read( sd , this->buffer, 1024);
                         std::string pMeno;
                         std::string pVolby;
                         ServerSpracovanie serverSpracovanie;
-                        serverSpracovanie.deserializuj(buffer, pMeno, pVolby);
+                        serverSpracovanie.deserializuj(this->buffer, pMeno, pVolby);
                         this->spravaTurnaja->pridajHraca(new HracServer(pVolby, pMeno));
-                        buffer[this->valread] = '\0';
+                        this->buffer[this->valread] = '\0';
 
                         if (this->client_socket[i] != 0) {
-                            send(sd , buffer , strlen(buffer) + 1, 0 );
+                            send(sd , this->buffer , strlen(this->buffer) + 1, 0 );
                         }
 
 
@@ -229,7 +229,7 @@ void Server::skontrolujOdpojenie() {
         {
             //Check if it was for closing , and also read the
             //incoming message
-            if ((valread = read( sd , buffer, 1024)) == 0)
+            if ((valread = read( sd , this->buffer, 1024)) == 0)
             {
                 //Somebody disconnected , get his details and print
                 getpeername(sd , (struct sockaddr*)&address , \
