@@ -75,9 +75,9 @@ void SimulujBoj::utocPrvy(void *sharedData) {
         }
 
     }
-    std::unique_lock<std::mutex> lock(threadData->getMutex());
+
     threadData->setKonec(true);
-    lock.unlock();
+
 
 
 }
@@ -107,9 +107,8 @@ void SimulujBoj::utocDruhy(void *sharedData) {
             std::cout << "------------------------" << std::endl;
         }
     }
-    std::unique_lock<std::mutex> lock(threadData->getMutex());
+
     threadData->setKonec(true);
-    lock.unlock();
 
 }
 

@@ -23,7 +23,7 @@ bool Bojovnik::zautoc(Bojovnik* bojovnik) {
         return false;
     }
 
-    std::cout << "\033[1;34m⚔️ " << this->meno << " útočí na " << bojovnik->getMeno() << "\033[0m" << std::endl;
+
 
     double nahodneCislo = static_cast<double>(std::rand()) / RAND_MAX;
 

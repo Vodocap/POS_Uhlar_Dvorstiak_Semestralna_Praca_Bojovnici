@@ -59,9 +59,6 @@ void Server::zapniServer() {
         exit(EXIT_FAILURE);
     }
 
-    //type of socket created
-
-
     this->address.sin_family = AF_INET;
     this->address.sin_addr.s_addr = INADDR_ANY;
     this->address.sin_port = htons( this->port );
@@ -121,9 +118,6 @@ void Server::zapniServer() {
             if ((activity < 0) && (errno != EINTR)) {
                 printf("select error");
             }
-
-            //If something happened on the master socket ,
-            //then its an incoming connection
 
             if (FD_ISSET(master_socket, &this->readfds)) {
                 if ((new_socket = accept(master_socket, (struct sockaddr *) &this->address, (socklen_t *) &this->addrlen)) < 0) {
@@ -191,7 +185,7 @@ void Server::zapniServer() {
             this->skontrolujOdpojenie();
             this->posli(&vyhodnotenie);
             this->posli(&endMessage);
-
+            break;
 
         }
 
@@ -226,11 +220,9 @@ void Server::skontrolujOdpojenie() {
 
         if (FD_ISSET( sd , &readfds))
         {
-            //Check if it was for closing , and also read the
-            //incoming message
+
             if ((valread = read( sd , this->buffer, 1024)) == 0)
             {
-                //Somebody disconnected , get his details and print
                 getpeername(sd , (struct sockaddr*)&address , \
                         (socklen_t*)&this->addrlen);
                 printf("Hrac odpojeny , ip %s , port %d \n" ,

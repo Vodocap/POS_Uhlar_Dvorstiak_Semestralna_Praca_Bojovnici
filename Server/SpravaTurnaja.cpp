@@ -9,8 +9,6 @@ void SpravaTurnaja::prevedBoje() {
     SimulujBoj boj;
     for (int i = 0; i < this->hraci.size(); ++i) {
         for (int j = 0; j < this->hraci.size(); ++j) {
-            std::cout<<i<<std::endl;
-            std::cout<<j<<std::endl;
             if (i != j){
                 boj.simulujBoj(new ThreadData(this->hraci[i]->dajTeam(), this->hraci[j]->dajTeam(), new Efekty(2)));
                 this->hraci[i]->dajTeam()->prirpavTeamNaDalsiBoj();
