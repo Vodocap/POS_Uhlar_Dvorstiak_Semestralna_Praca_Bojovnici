@@ -8,14 +8,20 @@
 
 #include <string>
 #include "SpravaTurnaja.h"
+#import <netinet/in.h>
 class Server {
 public:
     Server(char* pAdresa, short pPort, int pPocetHracov);
     void zapniServer();
     void posli(std::string *pVypis);
+    void skontrolujOdpojenie();
 
 private:
+    int valread;
+    fd_set readfds;
     char* adresa;
+    int addrlen;
+    struct sockaddr_in address;
     short port;
     int pocetHracov;
     SpravaTurnaja* spravaTurnaja;
