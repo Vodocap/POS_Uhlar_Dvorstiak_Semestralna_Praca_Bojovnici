@@ -8,7 +8,7 @@
 int main() {
 
         HracKlient hracKlient(36);
-        hracKlient.pripojSaNaServer("frios2.fri.uniza.sk", 12385);
+        hracKlient.pripojSaNaServer("127.0.0.1", 8080);
         hracKlient.vyziadajMeno();
         hracKlient.vyziadajVolby();
         hracKlient.posliUdaje();
