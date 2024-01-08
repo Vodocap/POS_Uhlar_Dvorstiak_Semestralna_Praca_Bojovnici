@@ -13,6 +13,7 @@
 class ThreadData {
 public:
     ThreadData(Team* pTeam1, Team* pTeam2, Efekty* pEfekty);
+    ~ThreadData();
     Team* getTeam1();
     Team* getTeam2();
     std::mutex& getMutex();

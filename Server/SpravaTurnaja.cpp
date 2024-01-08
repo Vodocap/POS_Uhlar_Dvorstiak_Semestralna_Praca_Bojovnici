@@ -5,12 +5,24 @@
 #include "SpravaTurnaja.h"
 
 
+SpravaTurnaja::~SpravaTurnaja() {
+
+    for (auto hrac : hraci) {
+        delete hrac;
+    }
+
+    hraci.clear();
+}
+
 void SpravaTurnaja::prevedBoje(std::function<void(const std::string&)> pFunkcia, std::string mess) {
     SimulujBoj boj(pFunkcia);
     for (int i = 0; i < this->hraci.size(); ++i) {
         for (int j = 0; j < this->hraci.size(); ++j) {
             if (i != j){
-                boj.simulujBoj(new ThreadData(this->hraci[i]->dajTeam(), this->hraci[j]->dajTeam(), new Efekty(2)), mess);
+
+                auto data = new ThreadData(this->hraci[i]->dajTeam(), this->hraci[j]->dajTeam(), new Efekty(2));
+
+                boj.simulujBoj(data, mess);
                 this->hraci[i]->dajTeam()->prirpavTeamNaDalsiBoj();
                 this->hraci[j]->dajTeam()->prirpavTeamNaDalsiBoj();
                 if (boj.getVitaz() == this->hraci[i]->getMeno()){
@@ -18,6 +30,9 @@ void SpravaTurnaja::prevedBoje(std::function<void(const std::string&)> pFunkcia,
                 } else{
                     this->hraci[j]->setSkore(this->hraci[j]->getSkore()+1);
                 }
+
+
+                delete data;
             }
         }
 

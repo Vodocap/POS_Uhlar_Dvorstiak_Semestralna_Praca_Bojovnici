@@ -8,6 +8,10 @@ ThreadData::ThreadData(Team *pTeam1, Team *pTeam2, Efekty* pEfekty) : team1(pTea
 
 }
 
+ThreadData::~ThreadData() {
+    delete efekty;
+}
+
 Team* ThreadData::getTeam1() {
     return this->team1;
 }

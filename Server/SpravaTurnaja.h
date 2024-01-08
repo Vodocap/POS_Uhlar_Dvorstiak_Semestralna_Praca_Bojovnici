@@ -13,6 +13,7 @@
 class SpravaTurnaja {
 
 public:
+    ~SpravaTurnaja();
     void prevedBoje(std::function<void(const std::string&)> pFunkcia, std::string mess);
     void pridajHraca(HracServer* hracServer);
     HracServer* dajHracaNaIndexe (int index);

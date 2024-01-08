@@ -12,6 +12,7 @@
 class Server {
 public:
     Server(char* pAdresa, short pPort, int pPocetHracov);
+    ~Server();
     void zapniServer();
     void posli(const std::string *pVypis);
     void skontrolujOdpojenie();
@@ -26,7 +27,7 @@ private:
     int pocetHracov;
     SpravaTurnaja* spravaTurnaja;
     char buffer[1025];
-    int* client_socket;
+    int* clientSockets;
     std::string endMessage = ":end";
 };
 

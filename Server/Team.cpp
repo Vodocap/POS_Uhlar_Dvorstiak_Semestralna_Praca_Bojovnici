@@ -3,6 +3,7 @@
 //
 
 #include <random>
+#include <memory>
 #include "Team.h"
 
 Team::Team(std::string paMeno, int paPocet) {
@@ -11,11 +12,11 @@ Team::Team(std::string paMeno, int paPocet) {
 
 }
 
-bool Team::pridajBojovnika(Bojovnik *bojovnik) {
+bool Team::pridajBojovnika(std::unique_ptr<Bojovnik> bojovnik) {
     if (bojovnik == nullptr || bojovnik->getMrtvy()) {
         return false;
     }
-    this->teamBojovnikov.push_back(bojovnik);
+    this->teamBojovnikov.push_back(std::move(bojovnik));
     return true;
 }
 
@@ -64,7 +65,7 @@ void Team::vytvorBojovnikov(double dolnaHranicaZivoty, double dolnaHranicaPoskod
     this->hornaHranicaRychlostUtoku = hornaHranicaRychlostUtoku;
     for (int i = 0; i < this->pocet; ++i) {
         std::string nazov = "Bojovnik pouzivatela " + this->meno;
-        this->pridajBojovnika(new Bojovnik(this->dajNahodneCisloZIntervalu(dolnaHranicaZivoty, hornaHranicaZivoty),
+        this->pridajBojovnika(std::make_unique<Bojovnik>(this->dajNahodneCisloZIntervalu(dolnaHranicaZivoty, hornaHranicaZivoty),
                                            this->dajNahodneCisloZIntervalu(dolnaHranicaPoskodenie, hornaHranicaPoskodenie),
                                            this->dajNahodneCisloZIntervalu(dolnaHranicaBrnenie, hornaHranicaBrnenie),
                                            this->dajNahodneCisloZIntervalu(dolnaHranicaUnik, hornaHranicaUnik),
@@ -77,11 +78,11 @@ const std::string &Team::getMeno() const {
     return meno;
 }
 
-Bojovnik *Team::dajBojovnikaNaBoj() {
+Bojovnik* Team::dajBojovnikaNaBoj() {
     if (this->teamBojovnikov.size() == 0){
         return nullptr;
     }
-    return this->teamBojovnikov.at(0);
+    return this->teamBojovnikov.at(0).get();
 }
 
 void Team::prirpavTeamNaDalsiBoj() {

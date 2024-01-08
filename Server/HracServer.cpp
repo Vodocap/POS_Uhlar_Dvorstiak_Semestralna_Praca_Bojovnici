@@ -11,6 +11,10 @@ HracServer::HracServer(std::string pVolby, std::string paMeno) {
     this->vytvorPodlaVolieb();
 }
 
+HracServer::~HracServer() {
+    delete team;
+}
+
 Team *HracServer::dajTeam() {
     return this->team;
 }
@@ -27,13 +31,6 @@ const std::string &HracServer::getMeno() const {
     return meno;
 }
 
-int HracServer::getCisloSocketu() const {
-    return cisloSocketu;
-}
-
-void HracServer::setCisloSocketu(int cisloSocketu) {
-    HracServer::cisloSocketu = cisloSocketu;
-}
 
 void HracServer::setVolby(std::string &volby) {
     HracServer::volby = volby;

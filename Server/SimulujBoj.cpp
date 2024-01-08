@@ -25,7 +25,7 @@ void SimulujBoj::simulujBoj(void* sharedData, std::string sprava) {
         std::cout << "------------------------" << std::endl;
         std::cout << "Tím " << threadData->getTeam1()->getMeno() << " vs. Tím " << threadData->getTeam2()->getMeno() << std::endl;
         std::cout << "------------------------" << std::endl;
-        sprava = "------------------------\n Tím " + threadData->getTeam1()->getMeno() + " vs. Tím " + threadData->getTeam2()->getMeno() + "\n"
+        sprava = "\n------------------------\n Tím " + threadData->getTeam1()->getMeno() + " vs. Tím " + threadData->getTeam2()->getMeno() + "\n"
                 + "------------------------\n";
         this->dajStringUtoku(this->spravy, sprava);
 
@@ -64,7 +64,6 @@ void SimulujBoj::utocPrvy(SimulujBoj* simulujBoj ,void *sharedData) {
     ThreadData* threadData = (ThreadData*) sharedData;
 
 
-    //simulujBoj->dajStringUtoku(simulujBoj->spravy, "Jano\n");
     while (threadData->getTeam1()->getVelkostTeamu() != 0 || !threadData->isKonec()) {
         if (threadData->getTeam1()->getVelkostTeamu() == 0 || threadData->getTeam2()->getVelkostTeamu() == 0) {
             threadData->setKonec(true);
@@ -81,10 +80,10 @@ void SimulujBoj::utocPrvy(SimulujBoj* simulujBoj ,void *sharedData) {
             threadData->setKonec(true);
             break;
         }
-        std::string messaz;
+        std::string spravaOUtoku;
 
-        if (threadData->getTeam1()->dajBojovnikaNaBoj()->zautoc(threadData->getTeam2()->dajBojovnikaNaBoj(), messaz)) {
-            simulujBoj->dajStringUtoku(simulujBoj->spravy, messaz);
+        if (threadData->getTeam1()->dajBojovnikaNaBoj()->zautoc(threadData->getTeam2()->dajBojovnikaNaBoj(), spravaOUtoku)) {
+            simulujBoj->dajStringUtoku(simulujBoj->spravy, spravaOUtoku);
         }
         threadData->getOddychuje().notify_all();
         threadData->setOddychujuci(0);

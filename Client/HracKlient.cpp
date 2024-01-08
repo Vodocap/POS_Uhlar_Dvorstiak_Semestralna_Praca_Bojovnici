@@ -88,7 +88,7 @@ const std::string &HracKlient::getMeno() const {
 std::string HracKlient::getVolba() {
     std::string volba;
     for (int i = 0; i < this->volby.size(); ++i) {
-        volba += std::to_string(this->volby[i]);
+        volba += std::to_string(this->volby.at(i));
     }
     return volba;
 }

@@ -6,12 +6,13 @@
 #define POS_UHLAR_DVORSTIAK_SEMESTRALNA_PRACA_BOJOVNICI_TEAM_H
 #include "Bojovnik.h"
 #include <vector>
+#include <memory>
 
 class Team {
 
 public:
     Team(std::string paMeno, int paPocet);
-    bool pridajBojovnika(Bojovnik* bojovnik);
+    bool pridajBojovnika(std::unique_ptr<Bojovnik> bojovnik);
     void odoberBojovnikaNaIndexe(int index);
     int getVelkostTeamu();
     Bojovnik* dajBojovnikaNaBoj();
@@ -26,7 +27,7 @@ public:
 
 private:
     std::string meno;
-    std::vector<Bojovnik*> teamBojovnikov;
+    std::vector<std::unique_ptr<Bojovnik>> teamBojovnikov;
     int pocet;
     double dolnaHranicaZivoty;
     double dolnaHranicaPoskodenie;
