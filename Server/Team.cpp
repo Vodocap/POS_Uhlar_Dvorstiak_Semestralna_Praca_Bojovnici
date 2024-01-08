@@ -48,6 +48,10 @@ void Team::vytvorBojovnikov(double dolnaHranicaZivoty, double dolnaHranicaPoskod
                             double dolnaHranicaUnik,double dolnaHranicaRychlostUtoku, double hornaHranicaZivoty, double hornaHranicaPoskodenie,
                             double hornaHranicaBrnenie, double hornaHranicaUnik,double hornaHranicaRychlostUtoku) {
 
+    for (int i = 0; i < this->teamBojovnikov.size(); ++i) {
+        this->teamBojovnikov.pop_back();
+    }
+
     this->dolnaHranicaZivoty = dolnaHranicaZivoty;
     this->dolnaHranicaBrnenie = dolnaHranicaBrnenie;
     this->dolnaHranicaPoskodenie = dolnaHranicaPoskodenie;

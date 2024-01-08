@@ -13,8 +13,9 @@
 class HracServer {
 
 public:
-    HracServer(std::string volby, std::string paMeno);
+    HracServer(std::string pVolby, std::string paMeno);
     Team* dajTeam();
+    void vytvorPodlaVolieb();
 
 
 private:

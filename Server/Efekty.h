@@ -14,7 +14,7 @@ private:
     std::vector<int> efekty;
 public:
     Efekty(int pMaxPocet);
-    bool tryAplikujEfekt(Bojovnik* bojovnik, int efekt);
+    bool tryAplikujEfekt(Bojovnik* bojovnik, int efekt, std::string& doSpravy);
     std::size_t getEfektySize();
     bool tryGeneryjPushEfekt(int efekt);
     bool tryOdoberEfekt(int *efekt);

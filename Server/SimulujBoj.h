@@ -16,8 +16,8 @@ public:
     void simulujBoj(void* sharedData, std::string sprava);
     static void utocPrvy(SimulujBoj* simulujBoj, void* sharedData);
     static void utocDruhy(SimulujBoj* simulujBoj, void* sharedData);
-    static void generujEfekty(void* sharedData);
-    static void aplikujEfekty(void* sharedData);
+    static void generujEfekty(SimulujBoj* simulujBoj, void* sharedData);
+    static void aplikujEfekty(SimulujBoj* simulujBoj, void* sharedData);
     void dajStringUtoku(std::function<void(const std::string&)> posliSpravu, const std::string& sprava);
 
 

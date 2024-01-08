@@ -89,7 +89,7 @@ void Server::zapniServer() {
 
 
     while (TRUE) {
-        while(clientNummes < 2) {
+        while(clientNummes < this->pocetHracov) {
             //clear the socket set
             FD_ZERO(&this->readfds);
 
@@ -190,21 +190,58 @@ void Server::zapniServer() {
             std::string vyhodnotenie = this->spravaTurnaja->vyhodnotTurnaj();
             this->posli(&vyhodnotenie);
             std::string opakovanie = "Hra skoncila, pokracuje este dalsie kolo";
+            std::cout << "Posiela sa opakovanie\n";
+            sleep(5);
             this->posli(&opakovanie);
 
             std::string pMeno;
             std::string pVolby;
             ServerSpracovanie serverSpracovanie;
-            serverSpracovanie.deserializuj(this->buffer, pMeno, pVolby);
-            for (int i = 0; i < this->pocetHracov; ++i) {
-                this->client_socket[i] = sd;
-                this->valread = read( sd , this->buffer, 1024);
-                if (this->spravaTurnaja->dajHracaNaIndexe(i)->getMeno() == pMeno) {
-                    this->spravaTurnaja->dajHracaNaIndexe(i)->setVolby(pVolby);
+
+            int pocetVolieb = 0;
+            int prejdeny = 0;
+            while (pocetVolieb <= this->pocetHracov) {
+
+                if (pocetVolieb == this->pocetHracov) {
+                    break;
+                }
+                for (int i = 0; i < this->pocetHracov; ++i) {
+                    std::cout << pocetVolieb << std::endl;
+                    sd = this->client_socket[i];
+                    if (sd != prejdeny) {
+                        prejdeny = sd;
+                        std::cout << pocetVolieb << std::endl;
+                        if (pocetVolieb == this->pocetHracov) {
+                            break;
+                        }
+                        this->valread = read( sd , this->buffer, 1024);
+                        serverSpracovanie.deserializuj(this->buffer, pMeno, pVolby);
+                        this->buffer[this->valread] = '\0';
+                        this->spravaTurnaja->dajHracaNaIndexe(i)->setVolby(pVolby);
+                        ++pocetVolieb;
+                        std::cout << "precitane: " << this->buffer << "zo socket descriptora " << sd << std::endl;
+                        std::string potvrdenie = "Prijali sme tvoje vstupy";
+                        sleep(1);
+                        this->posli(&potvrdenie);
+                        sleep(1);
+                        break;
+
+                    }
+
                 }
 
             }
-            this->buffer[this->valread] = '\0';
+
+
+
+            this->spravaTurnaja->prevedBoje(mojaFunkcia, janko);
+            vyhodnotenie = this->spravaTurnaja->vyhodnotTurnaj();
+            std::cout << "Posiela sa vyhodnotenie " << std::endl;
+            sleep(3);
+            this->posli(&vyhodnotenie);
+
+            sleep(3);
+            std::cout << "Posli endmessage " << std::endl;
             this->posli(&endMessage);
             this->skontrolujOdpojenie();
             break;
@@ -223,11 +260,12 @@ void Server::zapniServer() {
 void Server::posli(const std::string *pVypis) {
     int sd;
     for (int j = 0; j < this->pocetHracov; ++j) {
+        sleep(1);
         if (this->client_socket[j] != 0) {
             strcpy(this->buffer,pVypis->c_str());
             sd = this->client_socket[j];
             this->buffer[sizeof(this->buffer) - 1] = '\0';
-            printf("Posielam spravu na socket descriptor %d")
+            printf(" Posielam spravu na socket descriptor %d\n", sd);
             send(sd , this->buffer , strlen(this->buffer) + 1, 0 );
         }
 

@@ -18,13 +18,21 @@ void SimulujBoj::simulujBoj(void* sharedData, std::string sprava) {
 
     if (threadData->getTeam1()->getVelkostTeamu() > 0 && threadData->getTeam2()->getVelkostTeamu() > 0) {
 
+
         Team* prvyTeam = threadData->getTeam1();
         Team* druhyTeam = threadData->getTeam2();
 
+        std::cout << "------------------------" << std::endl;
+        std::cout << "Tím " << threadData->getTeam1()->getMeno() << " vs. Tím " << threadData->getTeam2()->getMeno() << std::endl;
+        std::cout << "------------------------" << std::endl;
+        sprava = "------------------------\n Tím " + threadData->getTeam1()->getMeno() + " vs. Tím " + threadData->getTeam2()->getMeno() + "\n"
+                + "------------------------\n";
+        this->dajStringUtoku(this->spravy, sprava);
+
         std::thread thUtoc1(utocPrvy, this, std::ref(threadData));
         std::thread thUtoc2(utocDruhy, this ,std::ref(threadData));
-        std::thread thEfektyGen(generujEfekty, std::ref(threadData));
-        std::thread thEfektyApl(aplikujEfekty, std::ref(threadData));
+        std::thread thEfektyGen(generujEfekty, this, std::ref(threadData));
+        std::thread thEfektyApl(aplikujEfekty, this, std::ref(threadData));
         thEfektyGen.join();
         thEfektyApl.join();
         thUtoc1.join();
@@ -54,9 +62,7 @@ const std::string &SimulujBoj::getVitaz() const {
 
 void SimulujBoj::utocPrvy(SimulujBoj* simulujBoj ,void *sharedData) {
     ThreadData* threadData = (ThreadData*) sharedData;
-    std::cout << "------------------------" << std::endl;
-    std::cout << "Tím " << threadData->getTeam1()->getMeno() << " vs. Tím " << threadData->getTeam2()->getMeno() << std::endl;
-    std::cout << "------------------------" << std::endl;
+
 
     //simulujBoj->dajStringUtoku(simulujBoj->spravy, "Jano\n");
     while (threadData->getTeam1()->getVelkostTeamu() != 0 || !threadData->isKonec()) {
@@ -142,7 +148,7 @@ void SimulujBoj::utocDruhy(SimulujBoj* simulujBoj,void *sharedData) {
 
 }
 
-void SimulujBoj::generujEfekty(void* sharedData) {
+void SimulujBoj::generujEfekty(SimulujBoj* simulujBoj, void* sharedData) {
     ThreadData* threadData = (ThreadData*) sharedData;
     while (true) {
         if (threadData->getTeam1()->getVelkostTeamu() == 0 || threadData->getTeam1()->getVelkostTeamu() == 1 || threadData->isKonec()) {
@@ -173,7 +179,7 @@ void SimulujBoj::generujEfekty(void* sharedData) {
     threadData->setKonec(true);
 }
 
-void SimulujBoj::aplikujEfekty(void* sharedData) {
+void SimulujBoj::aplikujEfekty(SimulujBoj* simulujBoj, void* sharedData) {
     ThreadData* threadData = (ThreadData*) sharedData;
     while (true) {
         if (threadData->getTeam1()->getVelkostTeamu() == 0 || threadData->getTeam1()->getVelkostTeamu() == 1 || threadData->isKonec()) {
@@ -209,11 +215,13 @@ void SimulujBoj::aplikujEfekty(void* sharedData) {
             threadData->getOddychuje().wait(lock);
         }
 
+        std::string spravaOEfekte;
         if (threadData->getOddychujuci() == 0) {
-            threadData->getEfekty()->tryAplikujEfekt(threadData->getTeam1()->dajBojovnikaNaBoj(), efekt);
+            threadData->getEfekty()->tryAplikujEfekt(threadData->getTeam1()->dajBojovnikaNaBoj(), efekt, spravaOEfekte);
         } else {
-            threadData->getEfekty()->tryAplikujEfekt(threadData->getTeam2()->dajBojovnikaNaBoj(), efekt);
+            threadData->getEfekty()->tryAplikujEfekt(threadData->getTeam2()->dajBojovnikaNaBoj(), efekt, spravaOEfekte);
         }
+        simulujBoj->dajStringUtoku(simulujBoj->spravy, spravaOEfekte);
         threadData->getPrazdneEfekty().notify_all();
         lock.unlock();
     }
