@@ -227,8 +227,7 @@ void Server::zapniServer() {
                         this->buffer[this->valread] = '\0';
                         this->spravaTurnaja->dajHracaNaIndexe(i)->setVolby(pVolby);
                         ++pocetVolieb;
-                        std::cout << "precitane: " << this->buffer << "zo socket descriptora " << sd << std::endl;
-                        std::string potvrdenie = "Prijali sme tvoje vstupy";
+                        std::string potvrdenie = "Prijali sme vstup";
                         sleep(1);
                         this->posli(&potvrdenie);
                         sleep(1);

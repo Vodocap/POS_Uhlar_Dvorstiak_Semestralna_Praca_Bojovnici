@@ -99,7 +99,6 @@ void SimulujBoj::utocPrvy(SimulujBoj* simulujBoj ,void *sharedData) {
 
     }
 
-    std::cout << "Bojovanie 1 skoncilo " << std::endl;
     threadData->getOddychuje().notify_all();
     threadData->setKonec(true);
 
@@ -143,7 +142,6 @@ void SimulujBoj::utocDruhy(SimulujBoj* simulujBoj,void *sharedData) {
 
     threadData->getOddychuje().notify_all();
     threadData->setKonec(true);
-    std::cout << "Bojovanie 2 skoncilo " << std::endl;
 
 }
 
@@ -172,7 +170,7 @@ void SimulujBoj::generujEfekty(SimulujBoj* simulujBoj, void* sharedData) {
         threadData->getPlneEfekty().notify_all();
 
     }
-    std::cout << "Generovanie skoncilo " << std::endl;
+
     threadData->getOddychuje().notify_all();
     threadData->getPlneEfekty().notify_all();
     threadData->setKonec(true);
