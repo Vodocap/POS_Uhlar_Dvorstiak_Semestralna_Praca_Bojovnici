@@ -274,7 +274,6 @@ void Server::posli(const std::string *pVypis) {
             strcpy(this->buffer,pVypis->c_str());
             sd = this->clientSockets[j];
             this->buffer[strlen(this->buffer)] = '\0';
-            printf(" Posielam spravu na socket descriptor %d\n", sd);
             send(sd , this->buffer , strlen(this->buffer) + 1, 0 );
         }
 

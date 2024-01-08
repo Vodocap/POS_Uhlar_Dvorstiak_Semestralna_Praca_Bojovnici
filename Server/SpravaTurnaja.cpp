@@ -17,8 +17,7 @@ SpravaTurnaja::~SpravaTurnaja() {
 void SpravaTurnaja::prevedBoje(std::function<void(const std::string&)> pFunkcia, std::string mess) {
     SimulujBoj boj(pFunkcia);
     for (int i = 0; i < this->hraci.size(); ++i) {
-        for (int j = 0; j < this->hraci.size(); ++j) {
-            if (i != j){
+        for (int j = i + 1; j < this->hraci.size(); ++j) {
 
                 auto data = new ThreadData(this->hraci[i]->dajTeam(), this->hraci[j]->dajTeam(), new Efekty(2));
 
@@ -37,7 +36,7 @@ void SpravaTurnaja::prevedBoje(std::function<void(const std::string&)> pFunkcia,
         }
 
 
-    }
+
     this->ukonceny = true;
 }
 
