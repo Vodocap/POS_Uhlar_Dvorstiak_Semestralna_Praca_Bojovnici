@@ -6,8 +6,8 @@
 #include <cstring>
 #include <unistd.h>
 #include "HracKlient.h"
-#include "../Server/Obchod.h"
-#include "../Server/Statistiky.h"
+#include "../Common/Obchod.h"
+#include "../Common/Statistiky.h"
 
 HracKlient::HracKlient(int peniaze) {
     this->peniaze = peniaze;

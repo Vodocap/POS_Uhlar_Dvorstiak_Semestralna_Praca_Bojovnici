@@ -8,7 +8,7 @@
 
 #include <string>
 #include "Team.h"
-#include "Statistiky.h"
+#include "../Common/Statistiky.h"
 
 class HracServer {
 

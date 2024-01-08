@@ -12,14 +12,14 @@ add_executable(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici_Server
         Server/HracServer.h
         Server/HracServer.cpp
         Server/mainServer.cpp
-        Server/Obchod.cpp
-        Server/Obchod.h
+        Common/Obchod.cpp
+        Common/Obchod.h
         Server/SimulujBoj.cpp
         Server/SimulujBoj.h
         Server/SpravaTurnaja.cpp
         Server/SpravaTurnaja.h
-        Server/Statistiky.cpp
-        Server/Statistiky.h
+        Common/Statistiky.cpp
+        Common/Statistiky.h
         Server/Team.cpp
         Server/Team.h
         Server/ThreadData.cpp
@@ -35,10 +35,10 @@ add_executable(POS_Uhlar_Dvorstiak_Semestralna_Praca_Bojovnici_Client
         Client/HracKlient.cpp
         Client/HracKlient.h
         Client/mainClient.cpp
-        Server/Obchod.h
-        Server/Obchod.cpp
-        Server/Statistiky.h
-        Server/Statistiky.cpp
+        Common/Obchod.h
+        Common/Obchod.cpp
+        Common/Statistiky.h
+        Common/Statistiky.cpp
         Client/SocketClient.h
         Client/SocketClient.cpp
 
