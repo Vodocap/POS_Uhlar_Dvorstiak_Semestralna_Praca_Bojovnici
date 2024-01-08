@@ -224,7 +224,7 @@ void SimulujBoj::aplikujEfekty(SimulujBoj* simulujBoj, void* sharedData) {
     }
     threadData->getPrazdneEfekty().notify_all();
     threadData->setKonec(true);
-    std::cout << "Aplikovanie skoncilo " << std::endl;
+
 }
 
 void SimulujBoj::dajStringUtoku(std::function<void(const std::string &)> posliSpravu, const std::string &sprava) {
