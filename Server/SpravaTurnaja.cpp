@@ -73,3 +73,10 @@ std::string SpravaTurnaja::vyhodnotTurnaj() {
 bool SpravaTurnaja::isUkonceny() const {
     return ukonceny;
 }
+
+HracServer *SpravaTurnaja::dajHracaNaIndexe(int i) {
+    if (i < this->hraci.size()) {
+        return this->hraci.at(i);
+    }
+    return nullptr;
+}

@@ -189,6 +189,22 @@ void Server::zapniServer() {
             this->spravaTurnaja->prevedBoje(mojaFunkcia, janko);
             std::string vyhodnotenie = this->spravaTurnaja->vyhodnotTurnaj();
             this->posli(&vyhodnotenie);
+            std::string opakovanie = "Hra skoncila, pokracuje este dalsie kolo";
+            this->posli(&opakovanie);
+
+            std::string pMeno;
+            std::string pVolby;
+            ServerSpracovanie serverSpracovanie;
+            serverSpracovanie.deserializuj(this->buffer, pMeno, pVolby);
+            for (int i = 0; i < this->pocetHracov; ++i) {
+                this->client_socket[i] = sd;
+                this->valread = read( sd , this->buffer, 1024);
+                if (this->spravaTurnaja->dajHracaNaIndexe(i)->getMeno() == pMeno) {
+                    this->spravaTurnaja->dajHracaNaIndexe(i)->setVolby(pVolby);
+                }
+
+            }
+            this->buffer[this->valread] = '\0';
             this->posli(&endMessage);
             this->skontrolujOdpojenie();
             break;
@@ -211,6 +227,7 @@ void Server::posli(const std::string *pVypis) {
             strcpy(this->buffer,pVypis->c_str());
             sd = this->client_socket[j];
             this->buffer[sizeof(this->buffer) - 1] = '\0';
+            printf("Posielam spravu na socket descriptor %d")
             send(sd , this->buffer , strlen(this->buffer) + 1, 0 );
         }
 

@@ -39,6 +39,10 @@ void HracServer::setCisloSocketu(int cisloSocketu) {
     HracServer::cisloSocketu = cisloSocketu;
 }
 
+void HracServer::setVolby(std::string &volby) {
+    HracServer::volby = volby;
+}
+
 
 
 

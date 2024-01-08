@@ -15,6 +15,7 @@ class SpravaTurnaja {
 public:
     void prevedBoje(std::function<void(const std::string&)> pFunkcia, std::string mess);
     void pridajHraca(HracServer* hracServer);
+    HracServer* dajHracaNaIndexe (int index);
     std::string vyhodnotTurnaj();
 private:
     bool ukonceny = false;

@@ -114,7 +114,7 @@ void HracKlient::citajSpravy() {
             buffer[valread] = '\0';
             std::cout << "Sprava od servera: " << buffer << std::endl;
 
-            if (strcmp(buffer, "Hra skoncila, pokracuje este dalsie kolo") == 0) {
+            if (strcmp(buffer, "Prva hra skoncila, pokracuje este dalsie kolo") == 0) {
                 this->vyziadajVolby();
                 this->posliUdaje();
             }

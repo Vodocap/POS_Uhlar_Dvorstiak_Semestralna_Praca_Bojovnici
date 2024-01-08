@@ -18,6 +18,11 @@ public:
 
 
 private:
+    std::string volby;
+public:
+    void setVolby(std::string &volby);
+
+private:
     std::string meno;
     int cisloSocketu;
 public:
