@@ -29,7 +29,7 @@ $(BUILD_DIR)/Server: $(OBJS_SERVER)
 	g++ $(OBJS_SERVER) -o $(BUILD_DIR)/Semstralka_Server
 
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS_CLIENT) $(OBJS_SERVER)
-	# Commands to combine Client and Server into one executable (if needed)
+	
 
 .PHONY: server client all clean
 
